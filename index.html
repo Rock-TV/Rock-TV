@@ -7,7 +7,7 @@
     <style>
         body {
             margin: 0;
-            background-color: #111;
+            background-color: #0d1b2a; /* Dunkelblauer Hintergrund */
             font-family: Arial, sans-serif;
         }
         .stream-layout {
@@ -28,14 +28,49 @@
             min-width: 300px;
             height: 450px;
         }
+        /* Neuer Header für Text und Logo nebeneinander */
+        .stream-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 25px;
+            gap: 20px;
+        }
+        .stream-title {
+            color: #fff;
+            margin: 0;
+            text-align: left; /* Linksbuendig */
+        }
+        .stream-logo {
+            width: 150px; /* Feste, kleinere Groesse */
+            height: auto;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+        /* Anpassung für sehr kleine Bildschirme */
+        @media (max-width: 600px) {
+            .stream-header {
+                flex-direction: row; /* Bleibt auch auf Handys nebeneinander */
+            }
+            .stream-title {
+                font-size: 1.2rem;
+            }
+            .stream-logo {
+                width: 100px; /* Auf Handys noch etwas kompakter */
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div id="livestream-overlay" style="display: flex; position: absolute; top: 0; left: 0; width: 100%; min-height: 100%; background: rgba(0,0,0,0.95); z-index: 3000; flex-direction: column; align-items: center; padding: 20px; box-sizing: border-box;">
-      <h2 style="color: #fff; margin-bottom: 10px; margin-top: 20px; text-align: center;">LIVE Stream<br>00:00 Intro - 00:00 Anfang</h2>
+    <div id="livestream-overlay" style="display: flex; position: absolute; top: 0; left: 0; width: 100%; min-height: 100%; background: rgba(13, 27, 42, 0.95); z-index: 3000; flex-direction: column; align-items: center; padding: 20px; box-sizing: border-box;">
       
-      <img src="Rock TV Logo1.png" style="max-width: 300px; border-radius: 10px; margin-bottom: 25px;" alt="Stream Info Bild">
+      <div class="stream-header">
+        <h2 class="stream-title">LIVE Stream<br>00:00 Intro - 00:00 Anfang</h2>
+        <img src="Rock TV Logo1.png" class="stream-logo" alt="Stream Info Bild">
+      </div>
 
       <div class="stream-layout">
         <div class="stream-container">
