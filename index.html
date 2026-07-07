@@ -127,11 +127,54 @@
             aspect-ratio: 16 / 9;
         }
         
-        /* Chat-Container mit flexibler Höhe */
+        /* Chat-Container mit relativem Bezug für das Overlay */
         .chat-container {
             flex: 1;
             min-width: 300px;
             height: 450px; 
+            position: relative;
+        }
+
+        /* Intelligente Chat-Sperre */
+        .chat-lock-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(13, 27, 42, 0);
+            border-radius: 15px;
+            z-index: 10;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.4s ease;
+        }
+
+        /* Wenn geklickt: Chat wird leicht gräulich */
+        .chat-lock-overlay.active {
+            background-color: rgba(13, 27, 42, 0.6);
+        }
+
+        /* Das Infofenster im gesperrten Chat */
+        .chat-lock-message {
+            background-color: #1b263b;
+            color: #e0e1dd;
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: 1px solid #e0e1dd;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.4s ease;
+            pointer-events: none;
+        }
+
+        .chat-lock-overlay.active .chat-lock-message {
+            opacity: 1;
+            transform: scale(1);
         }
 
         @media (max-width: 900px) {
@@ -178,6 +221,10 @@
         </div>
 
         <div class="chat-container">
+          <!-- Das Schutz-Overlay für den Chat -->
+          <div id="chatLock" class="chat-lock-overlay">
+              <div class="chat-lock-message">Stream offline</div>
+          </div>
           <iframe src="https://organizations.minnit.chat/863371023870187/c/Main?embed" style="width:100%; height:100%; border:none; border-radius: 15px;">Chat</iframe>
         </div>
       </div>
@@ -197,19 +244,34 @@
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 document.body.classList.add('loaded');
-            }, 500); // Wartet eine halbe Sekunde, öffnet sich dann für 1.5s
+            }, 500);
         });
 
-        // Countdown und Status Logik
+        // Elemente holen
         const statusBadge = document.getElementById('streamStatus');
         const countdownDisplay = document.getElementById('countdownDisplay');
+        const chatLock = document.getElementById('chatLock');
+        let lockTimeout = null;
+
+        // Klick-Logik für die Chat-Sperre
+        chatLock.addEventListener('click', () => {
+            // Falls bereits ein Timer läuft, diesen löschen, um die 5 Sek. neu zu starten
+            if (lockTimeout) clearTimeout(lockTimeout);
+
+            chatLock.classList.add('active');
+
+            lockTimeout = setTimeout(() => {
+                chatLock.classList.remove('active');
+            }, 5000); // 5000 Millisekunden = 5 Sekunden Anzeigezeit
+        });
 
         function updateStream() {
             const now = new Date();
 
             if (now < LIVE_START) {
-                // Vor dem Stream: Gelb + Countdown läuft rückwärts
+                // VOR DEM STREAM: Offline (Gelb), Countdown läuft, Chat gesperrt
                 statusBadge.className = "live-badge waiting";
+                chatLock.style.display = "flex";
                 
                 const diff = LIVE_START - now;
                 const hours = Math.floor(diff / (1000 * 60 * 60)).toString().padStart(2, '0');
@@ -219,14 +281,20 @@
                 countdownDisplay.textContent = `${hours}:${minutes}:${seconds}`;
             } 
             else if (now >= LIVE_START && now < LIVE_END) {
-                // Während des Streams: Rot (Live) + Countdown bleibt auf 00:00:00
+                // WÄHREND DES STREAMS: Online (Rot), Countdown auf 0, Chat offen!
                 statusBadge.className = "live-badge live";
                 countdownDisplay.textContent = "00:00:00";
+                
+                // Overlay komplett verstecken, damit man im Chat tippen kann
+                chatLock.style.display = "none";
+                chatLock.classList.remove('active');
+                if (lockTimeout) clearTimeout(lockTimeout);
             } 
             else {
-                // Nach dem Stream-Ende: Zurück auf Gelb + Countdown bleibt auf 00:00:00
+                // NACH DEM STREAM: Wieder Offline (Gelb), Countdown bleibt 0, Chat wieder gesperrt
                 statusBadge.className = "live-badge waiting";
                 countdownDisplay.textContent = "00:00:00";
+                chatLock.style.display = "flex";
             }
         }
 
