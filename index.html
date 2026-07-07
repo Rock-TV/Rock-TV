@@ -26,7 +26,7 @@
         .curtain-half {
             width: 50%;
             height: 100%;
-            background-color: #1b263b; /* Farbe des Vorhangs */
+            background-color: #1b263b;
             transition: transform 1.5s ease-in-out;
         }
         .curtain-left { transform: translateX(0); border-right: 2px solid #e0e1dd; }
@@ -57,26 +57,30 @@
             max-width: 1200px;
             margin-bottom: 25px;
             gap: 20px;
+            position: relative;
         }
         .stream-title {
             color: #fff;
             margin: 0;
             text-align: left;
+            position: relative;
         }
 
-        /* Dynamischer Live-Badge */
+        /* Abgerundeter Live-Badge */
         .live-badge {
             display: inline-flex;
             align-items: center;
             position: relative;
-            padding: 2px 25px 2px 5px;
+            padding: 4px 28px 4px 10px;
             font-weight: bold;
+            border-radius: 20px; /* Abgerundete Ecken */
             transition: all 0.5s ease;
+            margin-bottom: 8px;
         }
         .live-badge::after {
             content: '';
             position: absolute;
-            right: 8px;
+            right: 10px;
             top: 50%;
             transform: translateY(-50%);
             width: 8px;
@@ -85,17 +89,8 @@
             display: none;
         }
 
-        /* Status Gelb (Warten) */
-        .live-badge.waiting {
-            color: yellow;
-            border: 2px solid yellow;
-        }
-
-        /* Status Rot (Live) */
-        .live-badge.live {
-            color: red;
-            border: 2px solid red;
-        }
+        .live-badge.waiting { color: yellow; border: 2px solid yellow; }
+        .live-badge.live { color: red; border: 2px solid red; }
         .live-badge.live::after {
             display: block;
             background-color: red;
@@ -105,6 +100,57 @@
         @keyframes blink {
             0% { opacity: 0.2; }
             100% { opacity: 1; }
+        }
+
+        /* Ablaufplan-Button und Menü */
+        .schedule-wrapper {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            z-index: 4000; /* Legt sich über den Stream */
+            display: none;
+        }
+        .schedule-btn {
+            background-color: #d97706; /* Helles, mattes Orange */
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid #f59e0b;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            user-select: none;
+        }
+        .schedule-btn .arrow {
+            display: inline-block;
+            transition: transform 0.3s ease;
+            font-size: 0.75rem;
+        }
+        .schedule-content {
+            max-height: 0;
+            overflow: hidden;
+            background-color: #1e293b;
+            border-radius: 6px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+            transition: max-height 0.3s ease-in-out, padding 0.3s ease;
+            width: max-content;
+            max-width: 280px;
+            font-size: 0.85rem;
+            color: #e2e8f0;
+            box-sizing: border-box;
+        }
+        .schedule-content.open {
+            max-height: 300px; /* Erlaubt Ausfahren nach Bedarf */
+            padding: 10px;
+            border: 1px solid #475569;
+            margin-top: 5px;
+        }
+        .schedule-content.open + .schedule-btn .arrow {
+            transform: rotate(180deg);
         }
 
         .stream-logo {
@@ -127,7 +173,6 @@
             aspect-ratio: 16 / 9;
         }
         
-        /* Chat-Container mit relativem Bezug für das Overlay */
         .chat-container {
             flex: 1;
             min-width: 300px;
@@ -135,7 +180,6 @@
             position: relative;
         }
 
-        /* Intelligente Chat-Sperre */
         .chat-lock-overlay {
             position: absolute;
             top: 0;
@@ -151,13 +195,7 @@
             align-items: center;
             transition: background-color 0.4s ease;
         }
-
-        /* Wenn geklickt: Chat wird leicht gräulich */
-        .chat-lock-overlay.active {
-            background-color: rgba(13, 27, 42, 0.6);
-        }
-
-        /* Das Infofenster im gesperrten Chat */
+        .chat-lock-overlay.active { background-color: rgba(13, 27, 42, 0.6); }
         .chat-lock-message {
             background-color: #1b263b;
             color: #e0e1dd;
@@ -171,31 +209,17 @@
             transition: all 0.4s ease;
             pointer-events: none;
         }
+        .chat-lock-overlay.active .chat-lock-message { opacity: 1; transform: scale(1); }
 
-        .chat-lock-overlay.active .chat-lock-message {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        @media (max-width: 900px) {
-            .chat-container {
-                height: 250px; /* Kürzer, wenn unter dem Stream */
-            }
-        }
-
+        @media (max-width: 900px) { .chat-container { height: 250px; } }
         @media (max-width: 600px) {
-            .stream-title {
-                font-size: 1.2rem;
-            }
-            .stream-logo {
-                width: 100px;
-            }
+            .stream-title { font-size: 1.2rem; }
+            .stream-logo { width: 100px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Vorhang Elemente -->
     <div class="curtain-container">
         <div class="curtain-half curtain-left"></div>
         <div class="curtain-half curtain-right"></div>
@@ -206,7 +230,19 @@
         <h2 class="stream-title">
             <span id="streamStatus" class="live-badge waiting">LIVE Stream</span>
             <br>
+            <!-- Countdown Container -->
             <span id="countdownDisplay">00:00:00</span>
+            
+            <!-- Ablaufplan Container -->
+            <div id="scheduleWrapper" class="schedule-wrapper">
+                <div id="scheduleBtn" class="schedule-btn">Ablauf-Plan <span class="arrow">▼</span></div>
+                <div id="scheduleContent" class="schedule-content">
+                    <!-- HIER DEN TEXT FÜR DEN ABLAUFPLAN ANPASSEN -->
+                    15:30 - Begrüßung<br>
+                    15:45 - Gameplay Part 1<br>
+                    16:00 - Q&A und Ende
+                </div>
+            </div>
         </h2>
         <img src="Rock TV Logo1.png" class="stream-logo" alt="Stream Info Bild">
       </div>
@@ -221,7 +257,6 @@
         </div>
 
         <div class="chat-container">
-          <!-- Das Schutz-Overlay für den Chat -->
           <div id="chatLock" class="chat-lock-overlay">
               <div class="chat-lock-message">Stream offline</div>
           </div>
@@ -232,46 +267,46 @@
 
     <script>
         // ================= CONFIGURATION =================
-        // Hier stellst du ein, wann der Live-Stream STARTET (Jahr, Monat-1, Tag, Stunde, Minute, Sekunde)
-        // Hinweis: Monate zählen von 0-11 (0 = Januar, 6 = Juli, 11 = Dezember)
-        const LIVE_START = new Date(2026, 6, 7, 15, 50, 0); 
-
-        // Hier stellst du ein, wann der Live-Stream ENDET (wieder zurück auf Gelb schaltet)
-        const LIVE_END = new Date(2026, 6, 7, 16, 0, 0);
+        const LIVE_START = new Date(2026, 6, 7, 16, 5, 0); 
+        const LIVE_END = new Date(2026, 6, 7, 16, 10, 0);
         // =================================================
 
-        // Vorhang nach kurzer Verzögerung öffnen
         window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                document.body.classList.add('loaded');
-            }, 500);
+            setTimeout(() => { document.body.classList.add('loaded'); }, 500);
         });
 
-        // Elemente holen
         const statusBadge = document.getElementById('streamStatus');
         const countdownDisplay = document.getElementById('countdownDisplay');
         const chatLock = document.getElementById('chatLock');
+        const scheduleWrapper = document.getElementById('scheduleWrapper');
+        const scheduleBtn = document.getElementById('scheduleBtn');
+        const scheduleContent = document.getElementById('scheduleContent');
         let lockTimeout = null;
 
-        // Klick-Logik für die Chat-Sperre
+        // Ablaufplan toggle-Logik
+        scheduleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            scheduleContent.classList.toggle('open');
+        });
+        document.addEventListener('click', () => {
+            scheduleContent.classList.remove('open');
+        });
+
         chatLock.addEventListener('click', () => {
-            // Falls bereits ein Timer läuft, diesen löschen, um die 5 Sek. neu zu starten
             if (lockTimeout) clearTimeout(lockTimeout);
-
             chatLock.classList.add('active');
-
-            lockTimeout = setTimeout(() => {
-                chatLock.classList.remove('active');
-            }, 5000); // 5000 Millisekunden = 5 Sekunden Anzeigezeit
+            lockTimeout = setTimeout(() => { chatLock.classList.remove('active'); }, 5000);
         });
 
         function updateStream() {
             const now = new Date();
 
             if (now < LIVE_START) {
-                // VOR DEM STREAM: Offline (Gelb), Countdown läuft, Chat gesperrt
                 statusBadge.className = "live-badge waiting";
                 chatLock.style.display = "flex";
+                countdownDisplay.style.display = "inline";
+                scheduleWrapper.style.display = "none";
+                scheduleContent.classList.remove('open');
                 
                 const diff = LIVE_START - now;
                 const hours = Math.floor(diff / (1000 * 60 * 60)).toString().padStart(2, '0');
@@ -281,24 +316,29 @@
                 countdownDisplay.textContent = `${hours}:${minutes}:${seconds}`;
             } 
             else if (now >= LIVE_START && now < LIVE_END) {
-                // WÄHREND DES STREAMS: Online (Rot), Countdown auf 0, Chat offen!
                 statusBadge.className = "live-badge live";
-                countdownDisplay.textContent = "00:00:00";
                 
-                // Overlay komplett verstecken, damit man im Chat tippen kann
+                // Countdown ausblenden, Ablaufplan einblenden
+                countdownDisplay.style.display = "none";
+                scheduleWrapper.style.display = "block";
+                
                 chatLock.style.display = "none";
                 chatLock.classList.remove('active');
                 if (lockTimeout) clearTimeout(lockTimeout);
             } 
             else {
-                // NACH DEM STREAM: Wieder Offline (Gelb), Countdown bleibt 0, Chat wieder gesperrt
                 statusBadge.className = "live-badge waiting";
+                
+                // Nach Stream-Ende: Ablaufplan weg, Countdown zeigt wieder 00:00:00
+                countdownDisplay.style.display = "inline";
                 countdownDisplay.textContent = "00:00:00";
+                scheduleWrapper.style.display = "none";
+                scheduleContent.classList.remove('open');
+                
                 chatLock.style.display = "flex";
             }
         }
 
-        // Jede Sekunde aktualisieren
         setInterval(updateStream, 1000);
         updateStream();
     </script>
