@@ -73,7 +73,7 @@
             position: relative;
             padding: 4px 28px 4px 10px;
             font-weight: bold;
-            border-radius: 20px; /* Abgerundete Ecken */
+            border-radius: 20px;
             transition: all 0.5s ease;
             margin-bottom: 8px;
         }
@@ -107,11 +107,11 @@
             position: absolute;
             top: 40px;
             left: 0;
-            z-index: 4000; /* Legt sich über den Stream */
+            z-index: 4000;
             display: none;
         }
         .schedule-btn {
-            background-color: #d97706; /* Helles, mattes Orange */
+            background-color: #d97706;
             color: #fff;
             padding: 6px 12px;
             border-radius: 6px;
@@ -144,7 +144,7 @@
             box-sizing: border-box;
         }
         .schedule-content.open {
-            max-height: 300px; /* Erlaubt Ausfahren nach Bedarf */
+            max-height: 300px;
             padding: 10px;
             border: 1px solid #475569;
             margin-top: 5px;
@@ -177,39 +177,8 @@
             flex: 1;
             min-width: 300px;
             height: 450px; 
-            position: relative;
+            display: none; /* Standardmäßig ausgeblendet */
         }
-
-        .chat-lock-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(13, 27, 42, 0);
-            border-radius: 15px;
-            z-index: 10;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background-color 0.4s ease;
-        }
-        .chat-lock-overlay.active { background-color: rgba(13, 27, 42, 0.6); }
-        .chat-lock-message {
-            background-color: #1b263b;
-            color: #e0e1dd;
-            padding: 12px 24px;
-            border-radius: 8px;
-            border: 1px solid #e0e1dd;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            opacity: 0;
-            transform: scale(0.9);
-            transition: all 0.4s ease;
-            pointer-events: none;
-        }
-        .chat-lock-overlay.active .chat-lock-message { opacity: 1; transform: scale(1); }
 
         @media (max-width: 900px) { .chat-container { height: 250px; } }
         @media (max-width: 600px) {
@@ -237,7 +206,6 @@
             <div id="scheduleWrapper" class="schedule-wrapper">
                 <div id="scheduleBtn" class="schedule-btn">Ablauf-Plan <span class="arrow">▼</span></div>
                 <div id="scheduleContent" class="schedule-content">
-                    <!-- HIER DEN TEXT FÜR DEN ABLAUFPLAN ANPASSEN -->
                     15:30 - Begrüßung<br>
                     15:45 - Gameplay Part 1<br>
                     16:00 - Q&A und Ende
@@ -256,10 +224,7 @@
           </iframe>
         </div>
 
-        <div class="chat-container">
-          <div id="chatLock" class="chat-lock-overlay">
-              <div class="chat-lock-message">Stream offline</div>
-          </div>
+        <div id="chatContainer" class="chat-container">
           <iframe src="https://organizations.minnit.chat/863371023870187/c/Main?embed" style="width:100%; height:100%; border:none; border-radius: 15px;">Chat</iframe>
         </div>
       </div>
@@ -277,11 +242,10 @@
 
         const statusBadge = document.getElementById('streamStatus');
         const countdownDisplay = document.getElementById('countdownDisplay');
-        const chatLock = document.getElementById('chatLock');
+        const chatContainer = document.getElementById('chatContainer');
         const scheduleWrapper = document.getElementById('scheduleWrapper');
         const scheduleBtn = document.getElementById('scheduleBtn');
         const scheduleContent = document.getElementById('scheduleContent');
-        let lockTimeout = null;
 
         // Ablaufplan toggle-Logik
         scheduleBtn.addEventListener('click', (e) => {
@@ -292,21 +256,15 @@
             scheduleContent.classList.remove('open');
         });
 
-        chatLock.addEventListener('click', () => {
-            if (lockTimeout) clearTimeout(lockTimeout);
-            chatLock.classList.add('active');
-            lockTimeout = setTimeout(() => { chatLock.classList.remove('active'); }, 5000);
-        });
-
         function updateStream() {
             const now = new Date();
 
             if (now < LIVE_START) {
                 statusBadge.className = "live-badge waiting";
-                chatLock.style.display = "flex";
                 countdownDisplay.style.display = "inline";
                 scheduleWrapper.style.display = "none";
                 scheduleContent.classList.remove('open');
+                chatContainer.style.display = "none"; // Chat verstecken
                 
                 const diff = LIVE_START - now;
                 const hours = Math.floor(diff / (1000 * 60 * 60)).toString().padStart(2, '0');
@@ -317,25 +275,17 @@
             } 
             else if (now >= LIVE_START && now < LIVE_END) {
                 statusBadge.className = "live-badge live";
-                
-                // Countdown ausblenden, Ablaufplan einblenden
                 countdownDisplay.style.display = "none";
                 scheduleWrapper.style.display = "block";
-                
-                chatLock.style.display = "none";
-                chatLock.classList.remove('active');
-                if (lockTimeout) clearTimeout(lockTimeout);
+                chatContainer.style.display = "block"; // Chat anzeigen
             } 
             else {
                 statusBadge.className = "live-badge waiting";
-                
-                // Nach Stream-Ende: Ablaufplan weg, Countdown zeigt wieder 00:00:00
                 countdownDisplay.style.display = "inline";
                 countdownDisplay.textContent = "00:00:00";
                 scheduleWrapper.style.display = "none";
                 scheduleContent.classList.remove('open');
-                
-                chatLock.style.display = "flex";
+                chatContainer.style.display = "none"; // Chat verstecken
             }
         }
 
