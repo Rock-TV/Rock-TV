@@ -183,10 +183,22 @@
             justify-content: center;
         }
         .stream-container {
-            flex: 2;
-            min-width: 300px;
-            aspect-ratio: 16 / 9;
-        }
+    flex: 2;
+    min-width: 300px;
+    aspect-ratio: 16 / 9;
+    position: relative;
+}
+
+.twitch-button-blocker {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    right: 10px;
+    bottom: 10px;
+    background: transparent;
+    z-index: 100;
+    cursor: default;
+}
         
         .chat-container {
             flex: 1;
@@ -238,6 +250,7 @@
                   allowfullscreen="true" 
                   scrolling="no">
           </iframe>
+            <div class="twitch-button-blocker"></div>
         </div>
 </div>
 
