@@ -26,7 +26,6 @@
         .curtain-half {
             width: 50%;
             height: 100%;
-            /* Erzeugt den typischen Faltenwurf eines Theater-Vorhangs */
             background: repeating-linear-gradient(
                 90deg,
                 #660000,
@@ -64,15 +63,19 @@
             padding: 20px;
             box-sizing: border-box;
         }
+
+        /* Kopfzeile mit dünner Trennlinie */
         .stream-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1300px;
+            padding-bottom: 20px;
             margin-bottom: 25px;
             gap: 20px;
             position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
         }
         .stream-title {
             color: #fff;
@@ -174,43 +177,88 @@
             border-radius: 10px;
             flex-shrink: 0;
         }
+
+        /* Neues Layout-System: Reduziert Scroll-Bedarf massiv */
         .stream-layout {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: row;
             gap: 20px;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1400px;
             justify-content: center;
+            align-items: flex-start;
         }
-        .stream-container {
-    flex: 2;
-    min-width: 300px;
-    aspect-ratio: 16 / 9;
-    position: relative;
-}
 
-.twitch-button-blocker {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 85px;
-    height: 85px;
-    background: transparent;
-    z-index: 9999;
-    pointer-events: auto;
-}
-        
-        .chat-container {
+        /* Stream-Container */
+        .stream-container {
             flex: 1;
             min-width: 300px;
-            height: 450px; 
-            display: none;
+            aspect-ratio: 16 / 9;
+            position: relative;
+            max-width: 900px; /* Begrenzt die Größe im Modus 'ohne Chat' */
+            transition: max-width 0.3s ease;
         }
 
-        @media (max-width: 900px) { .chat-container { height: 250px; } }
+        /* Dynamische Begrenzung, wenn der Chat ausgeblendet ist */
+        .stream-layout.no-chat .stream-container {
+            max-width: 1050px; /* Stream wird ohne Chat etwas größer, aber nicht riesig */
+        }
+
+        /* Flexibler Twitch-Blocker */
+        .twitch-button-blocker {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 11%;
+            height: 15%;
+            min-width: 45px;
+            min-height: 45px;
+            max-width: 85px;
+            max-height: 85px;
+            background: transparent;
+            z-index: 9999;
+            pointer-events: auto;
+        }
+        
+        /* Chat-Container im Desktop-Modus rechts daneben */
+        .chat-container {
+            width: 350px;
+            height: calc(100vh - 180px);
+            min-height: 400px;
+            max-height: 600px;
+            display: none;
+            flex-shrink: 0;
+        }
+
+        /* Responsive Anpassungen für mobile Geräte (Handys) */
+        @media (max-width: 950px) {
+            .stream-layout {
+                flex-direction: column;
+                align-items: center;
+            }
+            .stream-container {
+                width: 100%;
+                max-width: 100%;
+            }
+            .chat-container {
+                width: 100%;
+                height: 400px;
+                max-height: 450px;
+            }
+            .twitch-button-blocker {
+                width: 13%;
+                height: 18%;
+            }
+        }
+
         @media (max-width: 600px) {
             .stream-title { font-size: 1.2rem; }
             .stream-logo { width: 100px; }
+            .chat-container { height: 350px; }
+            .twitch-button-blocker {
+                width: 16%;
+                height: 22%;
+            }
         }
     </style>
 </head>
@@ -242,7 +290,7 @@
         <img src="Rock TV_LOGO.png" class="stream-logo" alt="Stream Info Bild">
       </div>
 
-      <div class="stream-layout">
+      <div id="streamLayout" class="stream-layout">
         <div class="stream-container">
           <iframe style="width: 100%; height: 100%; border-radius: 15px;" 
                   src="https://player.twitch.tv/?channel=die_goblins1&parent=rock-tv.github.io" 
@@ -250,9 +298,8 @@
                   allowfullscreen="true" 
                   scrolling="no">
           </iframe>
-            <div class="twitch-button-blocker"></div>
+          <div class="twitch-button-blocker"></div>
         </div>
-</div>
 
         <div id="chatContainer" class="chat-container">
           <iframe src="https://organizations.minnit.chat/863371023870187/c/Main?embed" style="width:100%; height:100%; border:none; border-radius: 15px;">Chat</iframe>
@@ -272,6 +319,7 @@
 
         const statusBadge = document.getElementById('streamStatus');
         const countdownDisplay = document.getElementById('countdownDisplay');
+        const streamLayout = document.getElementById('streamLayout');
         const chatContainer = document.getElementById('chatContainer');
         const scheduleWrapper = document.getElementById('scheduleWrapper');
         const scheduleBtn = document.getElementById('scheduleBtn');
@@ -295,6 +343,7 @@
                 scheduleWrapper.style.display = "none";
                 scheduleContent.classList.remove('open');
                 chatContainer.style.display = "none";
+                streamLayout.classList.add('no-chat');
                 
                 const diff = LIVE_START - now;
                 const hours = Math.floor(diff / (1000 * 60 * 60)).toString().padStart(2, '0');
@@ -308,6 +357,7 @@
                 countdownDisplay.style.display = "none";
                 scheduleWrapper.style.display = "block";
                 chatContainer.style.display = "block";
+                streamLayout.classList.remove('no-chat');
             } 
             else {
                 statusBadge.className = "live-badge waiting";
@@ -316,25 +366,25 @@
                 scheduleWrapper.style.display = "none";
                 scheduleContent.classList.remove('open');
                 chatContainer.style.display = "none";
+                streamLayout.classList.add('no-chat');
             }
         }
-// Twitch-Button blockieren
-const blocker = document.querySelector(".twitch-button-blocker");
 
-blocker.addEventListener("click", function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-});
+        // Twitch-Button blockieren
+        const blocker = document.querySelector(".twitch-button-blocker");
 
-blocker.addEventListener("mousedown", function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-});
+        blocker.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        });
 
-// Bestehender Code
-setInterval(updateStream, 1000);
-updateStream();
-        
+        blocker.addEventListener("mousedown", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
+        setInterval(updateStream, 1000);
+        updateStream();
     </script>
 </body>
 </html>
