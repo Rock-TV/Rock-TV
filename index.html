@@ -13,8 +13,8 @@
             overflow-x: hidden;
         }
 
-        /* Vorhang-Animation mit Samt-Optik */
-        .curtain-container {
+        /* Modernes Cyber-Intro */
+        .intro-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -22,19 +22,40 @@
             height: 100vh;
             z-index: 9999;
             display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(-45deg, #1f0033, #001a33, #00331a, #33001a);
+            background-size: 400% 400%;
+            animation: gradientMove 6s ease infinite;
+            transition: opacity 1.5s ease, transform 1.5s ease;
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .intro-logo {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            opacity: 0;
+            transform: scale(0.7);
+            animation: logoBeaming 3.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            text-shadow: 0 0 20px rgba(255, 9, 20, 0.8), 0 0 40px rgba(0, 242, 254, 0.6);
+        }
+        @keyframes logoBeaming {
+            0% { opacity: 0; transform: scale(0.7); filter: blur(10px); }
+            30% { opacity: 1; transform: scale(1.05); filter: blur(0px); }
+            70% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.2); filter: blur(5px); }
+        }
+        body.loaded .intro-container {
+            opacity: 0;
+            transform: scale(1.05);
             pointer-events: none;
         }
-        .curtain-half {
-            width: 50%;
-            height: 100%;
-            background: repeating-linear-gradient(90deg, #500, #700 20px, #900 40px, #a00 60px, #400 80px);
-            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.8);
-            transition: transform 4.0s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .curtain-left { transform: translateX(0); border-right: 3px solid #200; }
-        .curtain-right { transform: translateX(0); border-left: 3px solid #200; }
-        body.loaded .curtain-left { transform: translateX(-100%); }
-        body.loaded .curtain-right { transform: translateX(100%); }
 
         /* Header Navigation */
         header {
@@ -85,7 +106,7 @@
         }
         .header-logo-img {
             width: auto;
-            height: 25px; /* Höhe des Logos anpassbar */
+            height: 25px;
             object-fit: contain;
             margin-bottom: 5px;
         }
@@ -325,10 +346,9 @@
 </head>
 <body>
 
-    <!-- Vorhang-Animation -->
-    <div class="curtain-container">
-        <div class="curtain-half curtain-left"></div>
-        <div class="curtain-half curtain-right"></div>
+    <!-- Neues, dynamisches Cyber-Intro -->
+    <div class="intro-container">
+        <div class="intro-logo">Rock TV</div>
     </div>
 
     <!-- Header Navigation -->
@@ -342,7 +362,6 @@
             </div>
         </div>
         <div class="header-right">
-            <!-- Hier wird nun das Logo-Bild statt des Textes geladen -->
             <img src="logo.png" alt="Rock TV" class="header-logo-img">
             <div class="header-time" id="clockDisplay">00:00</div>
         </div>
@@ -466,7 +485,8 @@
         // ============================================================
 
         window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => { document.body.classList.add('loaded'); }, 500);
+            // Intro verschwindet nach 3.5 Sekunden passend zur Text-Animation
+            setTimeout(() => { document.body.classList.add('loaded'); }, 3500);
         });
 
         let activeTarget = 'gaming';
