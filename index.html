@@ -83,13 +83,11 @@
             border: 1px solid rgba(255,255,255,0.2);
             min-width: 80px;
         }
-        .header-logo-small {
-            color: #e50914;
-            font-size: 0.75rem;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-            margin-bottom: 2px;
-            text-transform: uppercase;
+        .header-logo-img {
+            width: auto;
+            height: 25px; /* Höhe des Logos anpassbar */
+            object-fit: contain;
+            margin-bottom: 5px;
         }
         .header-time {
             font-size: 1.1rem;
@@ -344,7 +342,8 @@
             </div>
         </div>
         <div class="header-right">
-            <div class="header-logo-small">Rock TV</div>
+            <!-- Hier wird nun das Logo-Bild statt des Textes geladen -->
+            <img src="logo.png" alt="Rock TV" class="header-logo-img">
             <div class="header-time" id="clockDisplay">00:00</div>
         </div>
     </header>
