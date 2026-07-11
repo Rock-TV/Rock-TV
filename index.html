@@ -89,7 +89,7 @@
             display: flex;
             align-items: center;
             padding: 0 4%;
-            background: linear-gradient(rgba(0,0,0,0.1), #0b0c10), url('wald.png') no-center/contain no-repeat;
+            background: linear-gradient(rgba(0,0,0,0.1), #0b0c10), url('wald.png') center / contain no-repeat;
             background-position: 75% 40%;
         }
         .hero-content {
@@ -234,6 +234,8 @@
         .modal-hero {
             height: 250px;
             background: linear-gradient(to bottom, transparent, #181818), #2d2d2d;
+            background-size: cover;
+            background-position: center;
             display: flex;
             align-items: flex-end;
             padding: 20px;
@@ -374,7 +376,7 @@
                     <div class="card-title">Gaming Stream & Chat</div>
                 </div>
                 <div class="card" onclick="openPreview('tv')">
-                    <div class="card-img-placeholder">TV Sender</div>
+                    <div class="card-img-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url('wald.png') center/cover;">TV Sender</div>
                     <div class="card-title">Sender (TV) Programm</div>
                 </div>
             </div>
@@ -401,7 +403,7 @@
     <div class="modal" id="previewModal" onclick="closePreview()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-close" onclick="closePreview()">✕</div>
-            <div class="gaming.png">
+            <div class="modal-hero" id="modalHeroBg">
                 <h2 id="modalTitle" style="font-size: 2rem; margin: 0; text-shadow: 2px 2px 4px #000;">Kanal-Vorschau</h2>
             </div>
             <div class="modal-body">
@@ -431,16 +433,18 @@
                 end: new Date(2026, 6, 11, 20, 0, 0),
                 src: "https://player.twitch.tv/?channel=die_goblins1&parent=rock-tv.github.io",
                 hasChat: true,
-                isTwitch: true
+                isTwitch: true,
+                bg: "gaming.png"
             },
             tv: {
                 title: "Rock TV - Hauptsender",
                 desc: "Klassisches Fernseh-Erlebnis direkt im Web. Filme, Shows und Dokumentationen ohne störenden Live-Chat.",
                 start: new Date(2026, 6, 11, 19, 0, 0), 
                 end: new Date(2026, 6, 11, 20, 0, 0),
-                src: "HIER_DEINE_TV_STREAM_URL_EINFÜGEN", // Alternativer Videolink / YouTube / Custom-Player
+                src: "HIER_DEINE_TV_STREAM_URL_EINFÜGEN", 
                 hasChat: false,
-                isTwitch: false
+                isTwitch: false,
+                bg: "wald.png"
             }
         };
         // ============================================================
@@ -499,6 +503,7 @@
             
             document.getElementById('modalTitle').textContent = target.title;
             document.getElementById('modalDesc').textContent = target.desc;
+            document.getElementById('modalHeroBg').style.backgroundImage = `linear-gradient(to bottom, transparent, #181818), url('${target.bg}')`;
             
             const playBtn = document.getElementById('modalPlayBtn');
             playBtn.onclick = () => startStream(key);
@@ -532,7 +537,6 @@
                 player.style.display = 'block';
                 player.src = target.src; 
                 
-                // Twitch Blocker-Overlay und Chat-Sichtbarkeit strikt trennen
                 if (target.isTwitch) {
                     blocker.style.display = 'block';
                 } else {
