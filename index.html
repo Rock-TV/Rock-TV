@@ -286,6 +286,7 @@
             border: 1px solid #222;
         }
         .twitch-button-blocker {
+            display: none;
             position: absolute; right: 0; bottom: 0; width: 12%; height: 16%; z-index: 99; background: transparent;
         }
         .error-message {
@@ -329,7 +330,7 @@
         <div class="header-right" id="clockDisplay">00:00</div>
     </header>
 
-    <!-- STARTSEITE (Netflix-Stil Dashboard) -->
+    <!-- STARTSEITE -->
     <div id="page-home" style="padding-top: 60px;">
         <div class="hero">
             <div class="hero-content">
@@ -357,9 +358,9 @@
                     <div style="font-size: 0.85rem; color: #aaa;">Die Goblins live im Stream mit Gameplay & Q&A.</div>
                 </div>
                 <div class="card" style="min-width: 300px; background: #1f1f1f; padding: 15px; box-sizing: border-box;">
-                    <div style="color: #aaa; font-weight: bold; margin-bottom: 5px;">MORGEN - 15:30 Uhr</div>
-                    <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 5px;">Community Talk</div>
-                    <div style="font-size: 0.85rem; color: #aaa;">Gemeinsame Fragerunde und Pläne für die Woche.</div>
+                    <div style="color: #aaa; font-weight: bold; margin-bottom: 5px;">MORGEN - 20:15 Uhr</div>
+                    <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 5px;">TV Event: Harry Potter</div>
+                    <div style="font-size: 0.85rem; color: #aaa;">Der große Filmabend auf unserem TV-Sender.</div>
                 </div>
             </div>
         </div>
@@ -380,11 +381,11 @@
         </div>
     </div>
 
-    <!-- STREAM ANSICHT (Wird nach Play geöffnet) -->
+    <!-- STREAM ANSICHT -->
     <div id="page-stream" class="stream-view">
         <div class="main-player-box">
             <iframe id="mainPlayer" style="width: 100%; height: 100%; border: none;" allowfullscreen="true" scrolling="no"></iframe>
-            <div class="twitch-button-blocker"></div>
+            <div class="twitch-button-blocker" id="twitchBlocker"></div>
             <div id="streamError" class="error-message">
                 <h2>Heute kein Programm</h2>
                 <p>Dieser Sender ist aktuell offline oder für diese Uhrzeit nicht freigegeben.</p>
@@ -396,7 +397,7 @@
         </div>
     </div>
 
-    <!-- VORSCHAU MODAL (Netflix Pop-Up) -->
+    <!-- VORSCHAU MODAL -->
     <div class="modal" id="previewModal" onclick="closePreview()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-close" onclick="closePreview()">✕</div>
@@ -422,23 +423,24 @@
 
     <script>
         // ================= CONFIGURATION & SETTINGS =================
-        // Hier konfigurierst du, wann welcher Sender freigegeben ist
         const CONFIG = {
             gaming: {
                 title: "Gaming & Goblins Live",
                 desc: "Erlebe die Goblins live in Aktion. Volle Gaming-Power inklusive interaktivem Live-Chat für echtes Community-Feeling.",
-                start: new Date(2026, 6, 9, 20, 10, 0), // Jahr, Monat(0-11), Tag, Std, Min, Sek
-                end: new Date(2026, 6, 12, 23, 50, 0),
+                start: new Date(2026, 6, 11, 19, 0, 0), 
+                end: new Date(2026, 6, 11, 20, 0, 0),
                 src: "https://player.twitch.tv/?channel=die_goblins1&parent=rock-tv.github.io",
-                hasChat: true
+                hasChat: true,
+                isTwitch: true
             },
             tv: {
                 title: "Rock TV - Hauptsender",
-                desc: "Klassisches Fernseh-Erlebnis direkt im Web. Filme, Shows und Dokumentationen rund um die Uhr nach Sendeplan.",
-                start: new Date(2026, 6, 11, 20, 0, 0), 
-                end: new Date(2026, 6, 11, 22, 0, 0),
-                src: "", // Füge hier deine TV-Stream-Quelle ein, falls vorhanden
-                hasChat: false
+                desc: "Klassisches Fernseh-Erlebnis direkt im Web. Filme, Shows und Dokumentationen ohne störenden Live-Chat.",
+                start: new Date(2026, 6, 11, 19, 0, 0), 
+                end: new Date(2026, 6, 11, 20, 0, 0),
+                src: "HIER_DEINE_TV_STREAM_URL_EINFÜGEN", // Alternativer Videolink / YouTube / Custom-Player
+                hasChat: false,
+                isTwitch: false
             }
         };
         // ============================================================
@@ -449,30 +451,23 @@
 
         let activeTarget = 'gaming';
 
-        // Echtzeituhr & Timer-Logik
         function updateClockAndTimers() {
             const now = new Date();
-            
-            // Formatierung der normalen Tagesuhrzeit
             const hours = now.getHours().toString().padStart(2, '0');
             const minutes = now.getMinutes().toString().padStart(2, '0');
-            
-            // Standardmäßig die normale Uhrzeit anzeigen
             let displayTime = `${hours}:${minutes}`;
 
-            // Prüfen ob ein Timer aktiv ist und runterzählt (für den ausgewählten/aktiven Bereich)
             const currentConf = CONFIG[activeTarget];
             if (now < currentConf.start) {
                 const diff = currentConf.start - now;
                 const tHours = Math.floor(diff / (1000 * 60 * 60)).toString().padStart(2, '0');
                 const tMinutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
                 const tSeconds = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
-                displayTime = `${tHours}:${tMinutes}:${tSeconds}`; // Zeigt den Countdown, da er aktuell läuft
+                displayTime = `${tHours}:${tMinutes}:${tSeconds}`;
             }
 
             document.getElementById('clockDisplay').textContent = displayTime;
 
-            // Modal Live-Badge aktualisieren falls offen
             const modalBadge = document.getElementById('modalTimeBadge');
             if (now >= currentConf.start && now < currentConf.end) {
                 modalBadge.textContent = "JETZT LIVE";
@@ -484,25 +479,20 @@
         }
         setInterval(updateClockAndTimers, 1000);
 
-        // Navigation Seiten-Wechsel
         function showPage(pageId) {
             document.getElementById('page-home').style.display = 'none';
             document.getElementById('page-stream').style.display = 'none';
-
-            // Menü-Klassen anpassen
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
 
             if (pageId === 'home') {
                 document.getElementById('page-home').style.display = 'block';
                 document.querySelector('.nav-links .nav-item:nth-child(1)').classList.add('active');
             } else {
-                // Direkter Wechsel über Kategorien steuert Vorschaufenster an
                 openPreview(pageId);
                 document.getElementById('page-home').style.display = 'block';
             }
         }
 
-        // Preview Pop-Up öffnen
         function openPreview(key) {
             activeTarget = key;
             const target = CONFIG[key];
@@ -521,7 +511,6 @@
             document.getElementById('previewModal').style.display = 'none';
         }
 
-        // Stream starten & Zeitfreigabe prüfen
         function startStream(key) {
             closePreview();
             document.getElementById('page-home').style.display = 'none';
@@ -531,39 +520,42 @@
             const now = new Date();
             const player = document.getElementById('mainPlayer');
             const chat = document.getElementById('mainChat');
+            const blocker = document.getElementById('twitchBlocker');
             const errorBox = document.getElementById('streamError');
 
-            // Setze aktives Menü-Highlight
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             if(key === 'gaming') document.querySelector('.nav-links .nav-item:nth-child(2)').classList.add('active');
             if(key === 'tv') document.querySelector('.nav-links .nav-item:nth-child(3)').classList.add('active');
 
-            // Timer / Zeit-Validierung
             if (now >= target.start && now < target.end) {
-                // Freigegeben und Online
                 errorBox.style.display = 'none';
                 player.style.display = 'block';
-                player.src = target.src ? target.src : "about:blank"; 
+                player.src = target.src; 
                 
-                // Chat nur anzeigen wenn konfiguriert (nur bei Gaming)
+                // Twitch Blocker-Overlay und Chat-Sichtbarkeit strikt trennen
+                if (target.isTwitch) {
+                    blocker.style.display = 'block';
+                } else {
+                    blocker.style.display = 'none';
+                }
+
                 if (target.hasChat) {
                     chat.style.display = 'block';
                 } else {
                     chat.style.display = 'none';
                 }
             } else {
-                // Gesperrt / Kein Programm
                 player.style.display = 'none';
                 chat.style.display = 'none';
+                blocker.style.display = 'none';
                 errorBox.style.display = 'flex';
                 player.src = "";
             }
         }
 
-        // Twitch Blocker-Events absichern
-        const blocker = document.querySelector(".twitch-button-blocker");
+        const blockerEl = document.getElementById("twitchBlocker");
         ['click', 'mousedown'].forEach(evt => {
-            blocker.addEventListener(evt, e => {
+            blockerEl.addEventListener(evt, e => {
                 e.preventDefault();
                 e.stopPropagation();
             });
