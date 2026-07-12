@@ -156,25 +156,6 @@
             color: #e5e5e5;
             margin-bottom: 25px;
         }
-        .hero-btns {
-            display: flex;
-            gap: 15px;
-        }
-        .btn {
-            padding: 10px 24px;
-            border: none;
-            border-radius: 4px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: opacity 0.2s;
-        }
-        .btn-play { background-color: #fff; color: #000; }
-        .btn-info { background-color: rgba(109, 109, 110, 0.7); color: #fff; }
-        .btn:hover { opacity: 0.8; }
 
         /* Kategorien Reihen */
         .category-row {
@@ -381,16 +362,6 @@
                 font-size: 0.95rem;
                 margin-bottom: 20px;
             }
-            .hero-btns {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .btn {
-                width: 100%;
-                justify-content: center;
-                font-size: 1rem;
-                padding: 12px;
-            }
             .category-row {
                 padding: 0 4% 25px 4%;
             }
@@ -449,8 +420,6 @@
             <div class="logo-text">Rock TV</div>
             <div class="nav-links">
                 <div class="nav-item active" onclick="showPage('home')">Startseite</div>
-                <div class="nav-item" onclick="showPage('gaming')">Gaming</div>
-                <div class="nav-item" onclick="showPage('tv')">Sender-TV</div>
             </div>
         </div>
         <div class="header-right">
@@ -470,10 +439,6 @@
                 </div>
                 <h1 class="hero-title">Rock TV Live</h1>
                 <p class="hero-desc">Willkommen im ultimativen Entertainment-Hub. Erlebe packende Gaming-Streams, exklusive TV-Inhalte und interaktive Shows hautnah im modernen Design.</p>
-                <div class="hero-btns">
-                    <button class="btn btn-play" onclick="openPreview('gaming')">▶ Abspielen</button>
-                    <button class="btn btn-info" onclick="openPreview('gaming')">ⓘ Weitere Infos</button>
-                </div>
             </div>
         </div>
 
@@ -656,8 +621,6 @@
             const errorBox = document.getElementById('streamError');
 
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            if(key === 'gaming') document.querySelector('.nav-links .nav-item:nth-child(2)').classList.add('active');
-            if(key === 'tv') document.querySelector('.nav-links .nav-item:nth-child(3)').classList.add('active');
 
             if (now >= target.start && now < target.end) {
                 errorBox.style.display = 'none';
