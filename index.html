@@ -4,16 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock TV</title>
+    <!-- Verspielte, fette Comic-Schriftart laden -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
-            background-color: #0b0c10;
-            color: #fff;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #fffae6;
+            color: #333;
+            font-family: 'Fredoka', Arial, sans-serif;
             overflow-x: hidden;
         }
 
-        /* Modernes Cyber-Intro */
+        /* Fröhliches, buntes Intro */
         .intro-container {
             position: fixed;
             top: 0;
@@ -24,10 +26,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(-45deg, #1f0033, #001a33, #00331a, #33001a);
+            background: linear-gradient(-45deg, #ff5964, #35a7ff, #38b000, #ffb703);
             background-size: 400% 400%;
-            animation: gradientMove 6s ease infinite;
-            transition: opacity 1.5s ease, transform 1.5s ease;
+            animation: gradientMove 4s ease infinite;
+            transition: opacity 1s ease, transform 1s ease;
         }
         @keyframes gradientMove {
             0% { background-position: 0% 50%; }
@@ -35,21 +37,21 @@
             100% { background-position: 0% 50%; }
         }
         .intro-logo {
-            font-size: 4rem;
-            font-weight: 900;
+            font-size: 5rem;
+            font-weight: 700;
             color: #fff;
             text-transform: uppercase;
-            letter-spacing: 4px;
+            letter-spacing: 2px;
             opacity: 0;
-            transform: scale(0.7);
-            animation: logoBeaming 3.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-            text-shadow: 0 0 20px rgba(255, 9, 20, 0.8), 0 0 40px rgba(0, 242, 254, 0.6);
+            transform: scale(0.7) rotate(-5deg);
+            animation: logoBeaming 3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            text-shadow: 4px 4px 0px #000, 8px 8px 0px #ffb703;
         }
         @keyframes logoBeaming {
-            0% { opacity: 0; transform: scale(0.7); filter: blur(10px); }
-            30% { opacity: 1; transform: scale(1.05); filter: blur(0px); }
-            70% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: scale(1.2); filter: blur(5px); }
+            0% { opacity: 0; transform: scale(0.7) rotate(-5deg); filter: blur(5px); }
+            30% { opacity: 1; transform: scale(1.1) rotate(5deg); filter: blur(0px); }
+            70% { opacity: 1; transform: scale(1) rotate(-2deg); }
+            100% { opacity: 0; transform: scale(1.2) rotate(5deg); }
         }
         body.loaded .intro-container {
             opacity: 0;
@@ -60,10 +62,10 @@
         /* Header Navigation */
         header {
             display: flex;
-            justify-between: space-between;
+            justify-content: space-between;
             align-items: center;
             padding: 20px 4%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+            background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0.8), transparent);
             position: fixed;
             width: 92%;
             top: 0;
@@ -75,136 +77,190 @@
             gap: 30px;
         }
         .logo-text {
-            color: #e50914;
-            font-size: 1.8rem;
-            font-weight: bold;
-            letter-spacing: 1px;
+            color: #ff5964;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 3px 3px 0px #000;
+            transform: rotate(-3deg);
         }
         .nav-links {
             display: flex;
             gap: 20px;
-            font-size: 0.9rem;
-            color: #e5e5e5;
+            font-size: 1.2rem;
+            color: #333;
         }
         .nav-item {
             cursor: pointer;
-            transition: color 0.3s;
+            transition: transform 0.2s, color 0.2s;
+            background: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 3px solid #000;
+            box-shadow: 3px 3px 0px #000;
         }
         .nav-item:hover, .nav-item.active {
             color: #fff;
-            font-weight: bold;
+            background: #35a7ff;
+            transform: scale(1.1) rotate(2deg);
         }
+        
+        /* Logo oben rechts - Größer und ohne Kasten */
         .header-right {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            background: rgba(0,0,0,0.4);
-            padding: 8px 15px;
-            border-radius: 15px;
-            border: 1px solid rgba(255,255,255,0.2);
-            min-width: 80px;
+            gap: 20px;
+            position: absolute;
+            right: 4%;
+            top: 15px;
         }
         .header-logo-img {
+            height: 65px;
             width: auto;
-            height: 25px;
             object-fit: contain;
-            margin-bottom: 5px;
+            filter: drop-shadow(3px 3px 0px #000);
+            transition: transform 0.3s;
+        }
+        .header-logo-img:hover {
+            transform: scale(1.1) rotate(5deg);
         }
         .header-time {
-            font-size: 1.1rem;
-            font-weight: bold;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #38b000;
+            text-shadow: 2px 2px 0px #000, -2px -2px 0px #fff;
+            background: #fff;
+            padding: 5px 15px;
+            border-radius: 15px;
+            border: 3px solid #000;
+            box-shadow: 4px 4px 0px #000;
         }
 
         /* Hero / Haupt-Übersicht */
         .hero {
             position: relative;
-            height: 85vh;
+            height: 75vh;
             display: flex;
             align-items: center;
             padding: 0 4%;
-            background: linear-gradient(rgba(0,0,0,0.1), #0b0c10), url('wald.png') center / contain no-repeat;
-            background-position: 75% 40%;
+            background: radial-gradient(circle at 80%, #ffefb8, #fffae6);
+            border-bottom: 5px solid #000;
         }
         .hero-content {
             max-width: 600px;
             z-index: 10;
+            background: #fff;
+            padding: 30px;
+            border-radius: 30px;
+            border: 5px solid #000;
+            box-shadow: 8px 8px 0px #ffb703;
         }
         .hero-title {
-            font-size: 3.5rem;
-            margin: 0 0 10px 0;
-            font-weight: bold;
+            font-size: 4rem;
+            margin: 0 0 15px 0;
+            font-weight: 700;
+            color: #35a7ff;
+            text-shadow: 4px 4px 0px #000;
         }
         .hero-info-row {
             display: flex;
             gap: 15px;
             align-items: center;
             margin-bottom: 15px;
-            color: #46d369;
-            font-weight: bold;
-            font-size: 0.9rem;
+            color: #38b000;
+            font-weight: 700;
+            font-size: 1.1rem;
         }
         .hero-badge {
-            background: #333;
+            background: #ff5964;
             color: #fff;
-            padding: 1px 6px;
-            font-size: 0.75rem;
-            border-radius: 3px;
+            padding: 3px 10px;
+            font-size: 0.9rem;
+            border-radius: 10px;
+            border: 2px solid #000;
         }
         .hero-desc {
-            font-size: 1.1rem;
-            line-height: 1.4;
-            color: #e5e5e5;
-            margin-bottom: 25px;
+            font-size: 1.3rem;
+            line-height: 1.5;
+            color: #444;
+            margin-bottom: 0;
         }
 
         /* Kategorien Reihen */
         .category-row {
-            padding: 0 4% 40px 4%;
+            padding: 40px 4%;
         }
         .row-title {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            font-weight: bold;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: #000;
+            text-shadow: 2px 2px 0px #ffb703;
         }
         .cards-container {
             display: flex;
-            gap: 15px;
+            gap: 25px;
             overflow-x: auto;
-            padding-bottom: 10px;
-            -webkit-overflow-scrolling: touch;
+            padding-bottom: 20px;
         }
         .cards-container::-webkit-scrollbar { display: none; }
         .card {
-            min-width: 240px;
-            height: 140px;
-            background: #141414;
-            border-radius: 4px;
+            min-width: 260px;
+            height: 160px;
+            background: #fff;
+            border-radius: 25px;
             cursor: pointer;
-            transition: transform 0.3s;
+            transition: transform 0.2s, box-shadow 0.2s;
             position: relative;
             overflow: hidden;
-            border: 1px solid #222;
+            border: 4px solid #000;
+            box-shadow: 6px 6px 0px #000;
             flex-shrink: 0;
         }
         .card:hover {
-            transform: scale(1.05);
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 10px 10px 0px #000;
         }
         .card-img-placeholder {
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, #1f1f1f, #2d2d2d);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            color: #808080;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #fff;
+            text-shadow: 3px 3px 0px #000;
         }
         .card-title {
             position: absolute;
-            bottom: 10px;
-            left: 10px;
-            font-size: 0.9rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            bottom: 15px;
+            left: 15px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            background: #fff;
+            color: #000;
+            padding: 4px 10px;
+            border-radius: 10px;
+            border: 2px solid #000;
+        }
+
+        /* Knöpfe im Comic Stil */
+        .btn-play {
+            background: #38b000;
+            color: #fff;
+            border: 4px solid #000;
+            padding: 12px 25px;
+            font-size: 1.3rem;
+            font-family: 'Fredoka', Arial, sans-serif;
+            font-weight: 700;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px #000;
+            transition: transform 0.1s;
+        }
+        .btn-play:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px #000;
         }
 
         /* Preview / Vorschaufenster Modal */
@@ -215,23 +271,21 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.85);
+            background: rgba(255, 250, 230, 0.9);
             z-index: 2000;
             justify-content: center;
             align-items: center;
             padding: 10px;
-            box-sizing: border-box;
         }
         .modal-content {
-            background: #181818;
+            background: #fff;
             width: 100%;
             max-width: 700px;
-            border-radius: 8px;
+            border-radius: 35px;
             overflow: hidden;
             position: relative;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
-            max-height: 90vh;
-            overflow-y: auto;
+            border: 5px solid #000;
+            box-shadow: 12px 12px 0px #ffb703;
         }
         .modal-close {
             position: absolute;
@@ -241,25 +295,27 @@
             cursor: pointer;
             color: #fff;
             z-index: 10;
-            background: rgba(0,0,0,0.5);
-            width: 35px;
-            height: 35px;
+            background: #ff5964;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
+            border: 3px solid #000;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 3px 3px 0px #000;
         }
         .modal-hero {
-            height: 250px;
-            background: linear-gradient(to bottom, transparent, #181818), #2d2d2d;
+            height: 220px;
             background-size: cover;
             background-position: center;
             display: flex;
             align-items: flex-end;
             padding: 20px;
+            border-bottom: 4px solid #000;
         }
         .modal-body {
-            padding: 20px 30px 30px 30px;
+            padding: 25px;
         }
         .modal-details {
             display: flex;
@@ -268,14 +324,14 @@
         }
         .modal-desc {
             flex: 2;
-            font-size: 1rem;
+            font-size: 1.2rem;
             line-height: 1.5;
-            color: #ddd;
+            color: #333;
         }
         .modal-meta {
             flex: 1;
-            font-size: 0.85rem;
-            color: #999;
+            font-size: 1rem;
+            color: #555;
             display: flex;
             flex-direction: column;
             gap: 8px;
@@ -284,26 +340,29 @@
         /* Stream-Ansicht-Container */
         .stream-view {
             display: none;
-            padding: 90px 4% 40px 4%;
+            padding: 120px 4% 40px 4%;
             flex-direction: row;
-            gap: 20px;
+            gap: 25px;
             min-height: 80vh;
         }
         .main-player-box {
             flex: 1;
             aspect-ratio: 16/9;
             background: #000;
-            border-radius: 8px;
+            border-radius: 30px;
             position: relative;
             overflow: hidden;
+            border: 5px solid #000;
+            box-shadow: 8px 8px 0px #000;
         }
         .chat-box {
             width: 360px;
-            background: #141414;
-            border-radius: 8px;
+            background: #fff;
+            border-radius: 30px;
             display: none;
             overflow: hidden;
-            border: 1px solid #222;
+            border: 5px solid #000;
+            box-shadow: 8px 8px 0px #35a7ff;
         }
         .twitch-button-blocker {
             display: none;
@@ -313,103 +372,36 @@
             display: none;
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: #141414;
+            background: #fffae6;
             align-items: center;
             justify-content: center;
             text-align: center;
             flex-direction: column;
             padding: 20px;
         }
-        .error-message h2 { color: #e50914; margin-bottom: 10px; }
+        .error-message h2 { color: #ff5964; font-size: 2.5rem; text-shadow: 2px 2px 0px #000; margin-bottom: 10px; }
 
-        /* HANDY / SMARTPHONE OPTIMIERUNGEN (MOBILES RESPONSIVE DESIGN) */
+        /* Smartphone Optimierungen */
         @media (max-width: 768px) {
-            header {
-                padding: 15px 4%;
-                width: 92%;
-            }
-            .logo-text {
-                font-size: 1.4rem;
-            }
-            .nav-links {
-                gap: 12px;
-                font-size: 0.8rem;
-            }
-            .header-right {
-                padding: 4px 10px;
-                min-width: 60px;
-            }
-            .header-logo-img {
-                height: 18px;
-                margin-bottom: 2px;
-            }
-            .header-time {
-                font-size: 0.9rem;
-            }
-            .hero {
-                height: auto;
-                min-height: 90vh;
-                padding: 100px 4% 40px 4%;
-                background-size: cover;
-                background-position: center;
-                flex-direction: column;
-                justify-content: flex-end;
-            }
-            .hero-title {
-                font-size: 2.2rem;
-            }
-            .hero-desc {
-                font-size: 0.95rem;
-                margin-bottom: 20px;
-            }
-            .category-row {
-                padding: 0 4% 25px 4%;
-            }
-            .row-title {
-                font-size: 1.1rem;
-                margin-bottom: 10px;
-            }
-            .card {
-                min-width: 190px;
-                height: 110px;
-            }
-            .card-title {
-                font-size: 0.8rem;
-            }
-            .modal-content {
-                max-height: 95vh;
-            }
-            .modal-hero {
-                height: 160px;
-            }
-            .modal-body {
-                padding: 15px;
-            }
-            .modal-details {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .modal-desc {
-                font-size: 0.9rem;
-            }
-            .stream-view {
-                flex-direction: column;
-                padding-top: 85px;
-            }
-            .chat-box {
-                width: 100%;
-                height: 350px;
-            }
-            .intro-logo {
-                font-size: 2.5rem;
-                letter-spacing: 2px;
-            }
+            header { padding: 15px 4%; width: 92%; }
+            .logo-text { font-size: 1.8rem; }
+            .nav-links { gap: 10px; font-size: 1rem; }
+            .header-right { top: 10px; gap: 10px; }
+            .header-logo-img { height: 45px; }
+            .header-time { font-size: 1.3rem; padding: 3px 10px; }
+            .hero { padding-top: 120px; height: auto; }
+            .hero-title { font-size: 2.5rem; }
+            .hero-desc { font-size: 1.1rem; }
+            .card { min-width: 200px; height: 130px; border-radius: 20px; }
+            .stream-view { flex-direction: column; padding-top: 110px; }
+            .chat-box { width: 100%; height: 300px; }
+            .intro-logo { font-size: 3rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Dynamisches Cyber-Intro -->
+    <!-- Buntes Cyber-Intro -->
     <div class="intro-container">
         <div class="intro-logo">Rock TV</div>
     </div>
@@ -446,15 +438,15 @@
         <div class="category-row">
             <div class="row-title">Programm-Ablauf & Highlights</div>
             <div class="cards-container">
-                <div class="card" style="min-width: 260px; background: #1f1f1f; padding: 15px; box-sizing: border-box;">
-                    <div style="color: #e50914; font-weight: bold; margin-bottom: 5px;">Heute - **:** Uhr</div>
-                    <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 5px;">Kein Sender</div>
-                    <div style="font-size: 0.85rem; color: #aaa;">Kein Programm</div>
+                <div class="card" style="min-width: 260px; background: #fff; padding: 15px; box-sizing: border-box;">
+                    <div style="color: #ff5964; font-weight: bold; font-size: 1.2rem; margin-bottom: 5px;">Heute - **:** Uhr</div>
+                    <div style="font-size: 1.3rem; font-weight: bold; color: #000; margin-bottom: 5px;">Kein Sender</div>
+                    <div style="font-size: 1rem; color: #666;">Kein Programm</div>
                 </div>
-                <div class="card" style="min-width: 260px; background: #1f1f1f; padding: 15px; box-sizing: border-box;">
-                    <div style="color: #aaa; font-weight: bold; margin-bottom: 5px;">MORGEN - **:** Uhr</div>
-                    <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 5px;">kein Sender</div>
-                    <div style="font-size: 0.85rem; color: #aaa;">Kein Programm</div>
+                <div class="card" style="min-width: 260px; background: #fff; padding: 15px; box-sizing: border-box;">
+                    <div style="color: #666; font-weight: bold; font-size: 1.2rem; margin-bottom: 5px;">MORGEN - **:** Uhr</div>
+                    <div style="font-size: 1.3rem; font-weight: bold; color: #000; margin-bottom: 5px;">kein Sender</div>
+                    <div style="font-size: 1rem; color: #666;">Kein Programm</div>
                 </div>
             </div>
         </div>
@@ -464,11 +456,11 @@
             <div class="row-title">Programme</div>
             <div class="cards-container">
                 <div class="card" onclick="openPreview('gaming')">
-                    <div class="card-img-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url('gaming.png') center/cover;">Gaming</div>
+                    <div class="card-img-placeholder" style="background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('gaming.png') center/cover; background-color: #35a7ff;">Gaming</div>
                     <div class="card-title">Gaming-Livestream</div>
                 </div>
                 <div class="card" onclick="openPreview('tv')">
-                    <div class="card-img-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url('TV.png') center/cover;">TV</div>
+                    <div class="card-img-placeholder" style="background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('TV.png') center/cover; background-color: #ffb703;">TV</div>
                     <div class="card-title">TV Programm</div>
                 </div>
             </div>
@@ -478,12 +470,11 @@
     <!-- STREAM ANSICHT -->
     <div id="page-stream" class="stream-view">
         <div class="main-player-box" id="playerContainer">
-            <!-- Wird per JS dynamisch als iframe oder video instanziiert -->
             <div class="twitch-button-blocker" id="twitchBlocker"></div>
             <div id="streamError" class="error-message">
                 <h2>Heute kein Programm</h2>
-                <p>Dieser Sender ist aktuell offline oder für diese Uhrzeit nicht freigegeben.</p>
-                <button class="btn btn-play" style="margin-top: 15px; font-size: 0.9rem;" onclick="showPage('home')">Zurück zur Startseite</button>
+                <p style="font-size: 1.2rem; color: #555;">Dieser Sender ist aktuell offline oder für diese Uhrzeit nicht freigegeben.</p>
+                <button class="btn-play" style="margin-top: 15px; font-size: 1rem;" onclick="showPage('home')">Zurück zur Startseite</button>
             </div>
         </div>
         <div class="chat-box" id="mainChat">
@@ -496,21 +487,21 @@
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-close" onclick="closePreview()">✕</div>
             <div class="modal-hero" id="modalHeroBg">
-                <h2 id="modalTitle" style="font-size: 1.8rem; margin: 0; text-shadow: 2px 2px 4px #000;">Sender-Vorschau</h2>
+                <h2 id="modalTitle" style="font-size: 2.2rem; margin: 0; color: #fff; text-shadow: 3px 3px 0px #000;">Sender-Vorschau</h2>
             </div>
             <div class="modal-body">
                 <div class="hero-info-row">
-                    <span style="color: #46d369;">98% Match</span>
-                    <span id="modalTimeBadge" style="color: #fff; background: #e50914; padding: 2px 6px; border-radius: 3px;">LIVE-TIMER</span>
+                    <span style="color: #38b000;">98% Match</span>
+                    <span id="modalTimeBadge" style="color: #fff; background: #ff5964; padding: 4px 10px; border-radius: 10px; border: 2px solid #000;">LIVE-TIMER</span>
                 </div>
                 <div class="modal-details">
                     <div class="modal-desc" id="modalDesc">Hier steht die Beschreibung des Senders.</div>
                     <div class="modal-meta">
-                        <div><span style="color: #666;">Genre:</span> Entertainment</div>
-                        <div><span style="color: #666;">Verfügbarkeit:</span> Zeitgesteuert</div>
+                        <div><span style="color: #333; font-weight: bold;">Genre:</span> Entertainment</div>
+                        <div><span style="color: #333; font-weight: bold;">Verfügbarkeit:</span> Zeitgesteuert</div>
                     </div>
                 </div>
-                <button class="btn btn-play" id="modalPlayBtn" style="width: 100%; margin-top: 25px; justify-content: center;">▶ Abspielen</button>
+                <button class="btn-play" id="modalPlayBtn" style="width: 100%; margin-top: 25px; display: flex; justify-content: center; align-items: center;">▶ Abspielen</button>
             </div>
         </div>
     </div>
@@ -569,10 +560,10 @@
             const modalBadge = document.getElementById('modalTimeBadge');
             if (now >= currentConf.start && now < currentConf.end) {
                 modalBadge.textContent = "Programm läuft";
-                modalBadge.style.background = "#9809e5";
+                modalBadge.style.background = "#38b000";
             } else {
                 modalBadge.textContent = "heute **:**";
-                modalBadge.style.background = "#333";
+                modalBadge.style.background = "#ff5964";
             }
         }
         setInterval(updateClockAndTimers, 1000);
@@ -598,7 +589,7 @@
             
             document.getElementById('modalTitle').textContent = target.title;
             document.getElementById('modalDesc').textContent = target.desc;
-            document.getElementById('modalHeroBg').style.backgroundImage = `linear-gradient(to bottom, transparent, #181818), url('${target.bg}')`;
+            document.getElementById('modalHeroBg').style.backgroundImage = `linear-gradient(to bottom, transparent, #fff), url('${target.bg}')`;
             
             const playBtn = document.getElementById('modalPlayBtn');
             playBtn.onclick = () => startStream(key);
