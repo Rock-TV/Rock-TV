@@ -60,7 +60,7 @@
         /* Header Navigation */
         header {
             display: flex;
-            justify-content: space-between;
+            justify-between: space-between;
             align-items: center;
             padding: 20px 4%;
             background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
@@ -477,8 +477,8 @@
 
     <!-- STREAM ANSICHT -->
     <div id="page-stream" class="stream-view">
-        <div class="main-player-box">
-            <iframe id="mainPlayer" style="width: 100%; height: 100%; border: none;" allowfullscreen="true" scrolling="no"></iframe>
+        <div class="main-player-box" id="playerContainer">
+            <!-- Wird per JS dynamisch als iframe oder video instanziiert -->
             <div class="twitch-button-blocker" id="twitchBlocker"></div>
             <div id="streamError" class="error-message">
                 <h2>Heute kein Programm</h2>
@@ -526,6 +526,7 @@
                 src: "https://player.twitch.tv/?channel=die_goblins1&parent=rock-tv.github.io",
                 hasChat: true,
                 isTwitch: true,
+                isVideoFile: false,
                 bg: "gaming.png"
             },
             tv: {
@@ -533,9 +534,10 @@
                 desc: "Modernes TV-Erlebnis direkt im Web. Filme, Shows und Dokumentationen.",
                 start: new Date(2026, 6, 13, 14, 0, 0), 
                 end: new Date(2026, 6, 13, 14, 15, 0),
-                src: "http://rock-tv.github.io/Rock-TV/jurasic_world1.mp4", 
+                src: "https://rock-tv.github.io/Rock-TV/jurasic_world1.mp4", 
                 hasChat: false,
                 isTwitch: false,
+                isVideoFile: true,
                 bg: "TV.png"
             }
         };
@@ -578,6 +580,7 @@
         function showPage(pageId) {
             document.getElementById('page-home').style.display = 'none';
             document.getElementById('page-stream').style.display = 'none';
+            removeExistingPlayers();
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
 
             if (pageId === 'home') {
@@ -608,6 +611,13 @@
             document.getElementById('previewModal').style.display = 'none';
         }
 
+        function removeExistingPlayers() {
+            const oldIframe = document.getElementById('mainPlayer');
+            if (oldIframe) oldIframe.remove();
+            const oldVideo = document.getElementById('mainVideoPlayer');
+            if (oldVideo) oldVideo.remove();
+        }
+
         function startStream(key) {
             closePreview();
             document.getElementById('page-home').style.display = 'none';
@@ -615,17 +625,37 @@
 
             const target = CONFIG[key];
             const now = new Date();
-            const player = document.getElementById('mainPlayer');
+            const container = document.getElementById('playerContainer');
             const chat = document.getElementById('mainChat');
             const blocker = document.getElementById('twitchBlocker');
             const errorBox = document.getElementById('streamError');
 
+            removeExistingPlayers();
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
 
             if (now >= target.start && now < target.end) {
                 errorBox.style.display = 'none';
-                player.style.display = 'block';
-                player.src = target.src; 
+                
+                if (target.isVideoFile) {
+                    const videoEl = document.createElement('video');
+                    videoEl.id = "mainVideoPlayer";
+                    videoEl.style.width = "100%";
+                    videoEl.style.height = "100%";
+                    videoEl.controls = true;
+                    videoEl.autoplay = true;
+                    videoEl.src = target.src;
+                    container.appendChild(videoEl);
+                } else {
+                    const iframeEl = document.createElement('iframe');
+                    iframeEl.id = "mainPlayer";
+                    iframeEl.style.width = "100%";
+                    iframeEl.style.height = "100%";
+                    iframeEl.style.border = "none";
+                    iframeEl.allowFullscreen = true;
+                    iframeEl.scrolling = "no";
+                    iframeEl.src = target.src;
+                    container.appendChild(iframeEl);
+                }
                 
                 if (target.isTwitch) {
                     blocker.style.display = 'block';
@@ -639,11 +669,9 @@
                     chat.style.display = 'none';
                 }
             } else {
-                player.style.display = 'none';
                 chat.style.display = 'none';
                 blocker.style.display = 'none';
                 errorBox.style.display = 'flex';
-                player.src = "";
             }
         }
 
