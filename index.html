@@ -536,7 +536,7 @@
                 src: "https://rock-tv.github.io/Rock-TV/jurasic_world1.mp4", 
                 hasChat: false,
                 isTwitch: false,
-                bg: "wald.png"
+                bg: "TV.png"
             }
         };
         // ============================================================
@@ -566,10 +566,10 @@
 
             const modalBadge = document.getElementById('modalTimeBadge');
             if (now >= currentConf.start && now < currentConf.end) {
-                modalBadge.textContent = "JETZT LIVE";
-                modalBadge.style.background = "#e50914";
+                modalBadge.textContent = "Programm läuft";
+                modalBadge.style.background = "#9809e5";
             } else {
-                modalBadge.textContent = "OFFLINE / GEPLANT";
+                modalBadge.textContent = "heute **:**";
                 modalBadge.style.background = "#333";
             }
         }
