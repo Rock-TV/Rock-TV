@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock TV</title>
-    <!-- Fette, urbane Comic- und Block-Schriften -->
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Permanent+Marker&family=Rubik:wght@600;900&display=swap" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;900&family=Montserrat:wght@300;400;600&display=swap');
+
         body {
             margin: 0;
-            background-color: #eef1f5; /* Cooler urbaner Hintergrund */
-            color: #1a1a1a;
-            font-family: 'Rubik', sans-serif;
+            background-color: #050b14;
+            color: #f9f9f9;
+            font-family: 'Montserrat', Arial, sans-serif;
             overflow-x: hidden;
         }
 
-        /* Edles, dynamisches Intro im Graffiti-Style */
+        /* Magisches Disney-Intro */
         .intro-container {
             position: fixed;
             top: 0;
@@ -26,42 +26,45 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #111;
-            transition: opacity 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+            background: radial-gradient(circle at center, #102a45 0%, #050b14 100%);
+            transition: opacity 1.2s ease, transform 1.2s ease;
         }
         .intro-logo {
-            font-family: 'Bangers', sans-serif;
-            font-size: 6rem;
-            color: #ff3e3e;
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #fff;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            transform: scale(0.5) rotate(-10deg);
+            letter-spacing: 6px;
             opacity: 0;
-            animation: logoPop 2.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            text-shadow: 5px 5px 0px #3a86ff, 10px 10px 0px #000;
+            transform: scale(0.85);
+            animation: royalGlow 3.5s ease-in-out forwards;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.6), 0 0 40px rgba(255, 255, 255, 0.4);
         }
-        @keyframes logoPop {
-            0% { opacity: 0; transform: scale(0.5) rotate(-10deg); }
-            20% { opacity: 1; transform: scale(1.1) rotate(5deg); }
-            80% { opacity: 1; transform: scale(1) rotate(-3deg); }
-            100% { opacity: 0; transform: scale(1.3) rotate(10deg); filter: blur(5px); }
+        @keyframes royalGlow {
+            0% { opacity: 0; transform: scale(0.85); filter: blur(8px); }
+            40% { opacity: 1; transform: scale(1); filter: blur(0px); }
+            70% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.05); filter: blur(4px); }
         }
         body.loaded .intro-container {
             opacity: 0;
+            transform: scale(1);
             pointer-events: none;
         }
 
-        /* Urban Header */
+        /* Elegantes Premium Header Nav */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 25px 4%;
-            background: linear-gradient(to bottom, rgba(238,241,245,0.95), transparent);
+            padding: 20px 4%;
+            background: linear-gradient(to bottom, rgba(5, 11, 20, 0.95), transparent);
             position: fixed;
             width: 92%;
             top: 0;
             z-index: 1000;
+            backdrop-filter: blur(10px);
         }
         .header-left {
             display: flex;
@@ -69,205 +72,162 @@
             gap: 40px;
         }
         .logo-text {
-            font-family: 'Bangers', sans-serif;
-            color: #ff3e3e;
-            font-size: 3.5rem;
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            font-size: 2rem;
+            font-weight: 900;
             letter-spacing: 2px;
-            text-shadow: 4px 4px 0px #000;
-            transform: rotate(-4deg);
+            text-shadow: 0 2px 10px rgba(212,175,55,0.3);
         }
         .nav-links {
             display: flex;
-            gap: 15px;
+            gap: 25px;
+            font-size: 0.95rem;
+            color: #b5c3d4;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
         .nav-item {
-            font-family: 'Rubik', sans-serif;
-            font-weight: 900;
-            text-transform: uppercase;
             cursor: pointer;
-            transition: transform 0.15s, background-color 0.15s;
-            background: #fff;
-            padding: 10px 20px;
-            border: 4px solid #000;
-            box-shadow: 4px 4px 0px #000;
+            transition: color 0.3s, text-shadow 0.3s;
         }
         .nav-item:hover, .nav-item.active {
             color: #fff;
-            background: #3a86ff;
-            transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0px #000;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
         }
-        
-        /* Logo oben rechts - Groß ohne Kasten, voll integriert */
         .header-right {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 20px;
-            position: absolute;
-            right: 4%;
-            top: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         .header-logo-img {
-            height: 75px;
             width: auto;
+            height: 22px;
             object-fit: contain;
-            filter: drop-shadow(4px 4px 0px #000);
-            transition: transform 0.2s;
-        }
-        .header-logo-img:hover {
-            transform: scale(1.05) rotate(3deg);
+            margin-bottom: 3px;
         }
         .header-time {
-            font-family: 'Bangers', sans-serif;
-            font-size: 2.2rem;
-            letter-spacing: 1px;
-            color: #00bf63;
-            text-shadow: 3px 3px 0px #000;
-            background: #fff;
-            padding: 4px 18px;
-            border: 4px solid #000;
-            box-shadow: 5px 5px 0px #000;
-            transform: rotate(2deg);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #d4af37;
         }
 
-        /* Hero / Haupt-Übersicht */
+        /* Hero / Haupt-Übersicht im Kinolook */
         .hero {
             position: relative;
-            height: 70vh;
+            height: 80vh;
             display: flex;
             align-items: center;
             padding: 0 4%;
-            background: linear-gradient(rgba(238,241,245,0.3), rgba(238,241,245,0.9)), url('TV.png') center/cover;
-            border-bottom: 6px solid #000;
+            background: linear-gradient(to right, #050b14 30%, rgba(5, 11, 20, 0.7) 60%, transparent 100%), url('wald.png') center / cover no-repeat;
         }
         .hero-content {
             max-width: 650px;
             z-index: 10;
-            background: #fff;
-            padding: 40px;
-            border: 5px solid #000;
-            box-shadow: 10px 10px 0px #3a86ff;
-            transform: rotate(-1deg);
         }
         .hero-title {
-            font-family: 'Bangers', sans-serif;
-            font-size: 5rem;
-            line-height: 0.95;
-            margin: 0 0 20px 0;
-            color: #111;
-            text-shadow: 4px 4px 0px #ff3e3e;
-            text-transform: uppercase;
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            margin: 10px 0;
+            font-weight: 900;
+            letter-spacing: 1px;
+            color: #fff;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.6);
         }
         .hero-info-row {
             display: flex;
             gap: 15px;
             align-items: center;
-            margin-bottom: 20px;
-            color: #00bf63;
-            font-weight: 900;
-            font-size: 1.1rem;
-            text-transform: uppercase;
+            margin-bottom: 15px;
+            color: #d4af37;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
         }
         .hero-badge {
-            background: #ff3e3e;
-            color: #fff;
-            padding: 4px 12px;
-            font-size: 0.9rem;
-            border: 3px solid #000;
-            font-weight: 900;
+            background: rgba(212, 175, 55, 0.2);
+            color: #d4af37;
+            padding: 2px 8px;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            border: 1px solid rgba(212, 175, 55, 0.4);
         }
         .hero-desc {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             line-height: 1.6;
-            color: #333;
-            font-weight: 600;
+            color: #cfdaf0;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
         }
 
-        /* Kategorien Reihen */
+        /* Harmonische Karten-Reihen */
         .category-row {
-            padding: 50px 4% 20px 4%;
+            padding: 0 4% 40px 4%;
         }
         .row-title {
-            font-family: 'Bangers', sans-serif;
-            font-size: 2.8rem;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: 600;
             letter-spacing: 1px;
-            margin-bottom: 25px;
-            color: #111;
-            text-shadow: 3px 3px 0px #3a86ff;
-            text-transform: uppercase;
+            color: #fff;
+            border-left: 4px solid #d4af37;
+            padding-left: 12px;
         }
         .cards-container {
             display: flex;
-            gap: 30px;
+            gap: 20px;
             overflow-x: auto;
-            padding-bottom: 25px;
+            padding: 10px 5px;
         }
         .cards-container::-webkit-scrollbar { display: none; }
-        
-        /* Karten mit Original-Bild im Hintergrund */
         .card {
-            min-width: 300px;
-            height: 180px;
-            background: #111;
+            min-width: 260px;
+            height: 150px;
+            background: #0b1524;
+            border-radius: 12px;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s, border-color 0.3s;
             position: relative;
             overflow: hidden;
-            border: 5px solid #000;
-            box-shadow: 8px 8px 0px #000;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            flex-shrink: 0;
         }
         .card:hover {
-            transform: scale(1.03) translateY(-4px);
-            box-shadow: 12px 12px 0px #ff3e3e;
+            transform: translateY(-5px) scale(1.03);
+            border-color: rgba(212, 175, 55, 0.5);
+            box-shadow: 0 12px 30px rgba(212, 175, 55, 0.15);
         }
         .card-img-placeholder {
             width: 100%;
             height: 100%;
-            background-size: cover;
-            background-position: center;
+            background: linear-gradient(45deg, #0b1524, #132238);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.3s;
-        }
-        .card:hover .card-img-placeholder {
-            transform: scale(1.05);
+            font-weight: 600;
+            color: #fff;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
         }
         .card-title {
             position: absolute;
-            bottom: 20px;
-            left: 20px;
-            font-family: 'Bangers', sans-serif;
-            font-size: 1.8rem;
-            letter-spacing: 1px;
-            background: #fff;
-            color: #111;
-            padding: 5px 15px;
-            border: 3px solid #000;
-            text-transform: uppercase;
-            box-shadow: 4px 4px 0px #000;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            background: linear-gradient(to top, rgba(5,11,20,0.9), transparent);
+            box-sizing: border-box;
         }
 
-        /* Knöpfe im Comic/Streetwear Stil */
-        .btn-play {
-            background: #00bf63;
-            color: #fff;
-            border: 4px solid #000;
-            padding: 15px 35px;
-            font-size: 1.4rem;
-            font-family: 'Bangers', sans-serif;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            cursor: pointer;
-            box-shadow: 5px 5px 0px #000;
-            transition: transform 0.1s, box-shadow 0.1s;
-        }
-        .btn-play:active {
-            transform: translate(5px, 5px);
-            box-shadow: 0px 0px 0px #000;
-        }
-
-        /* Preview / Vorschaufenster Modal */
+        /* Edles Vorschaufenster Modal */
         .modal {
             display: none;
             position: fixed;
@@ -275,57 +235,57 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(17, 17, 17, 0.85);
+            background: rgba(5, 11, 20, 0.85);
             z-index: 2000;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            box-sizing: border-box;
+            backdrop-filter: blur(8px);
         }
         .modal-content {
-            background: #fff;
+            background: #0b1524;
             width: 100%;
             max-width: 750px;
+            border-radius: 20px;
+            overflow: hidden;
             position: relative;
-            border: 6px solid #000;
-            box-shadow: 16px 16px 0px #3a86ff;
-            animation: modalSlide 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        @keyframes modalSlide {
-            0% { transform: translateY(30px); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid rgba(212, 175, 55, 0.2);
         }
         .modal-close {
             position: absolute;
-            top: -20px;
-            right: -20px;
-            font-size: 1.5rem;
+            top: 20px;
+            right: 20px;
+            font-size: 1.2rem;
             cursor: pointer;
             color: #fff;
             z-index: 10;
-            background: #ff3e3e;
-            width: 45px;
-            height: 45px;
-            border: 4px solid #000;
+            background: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 4px 4px 0px #000;
-            font-weight: 900;
+            transition: background 0.3s;
         }
         .modal-close:hover {
-            transform: scale(1.1) rotate(90deg);
+            background: rgba(212, 175, 55, 0.3);
         }
         .modal-hero {
-            height: 260px;
+            height: 280px;
+            background: linear-gradient(to bottom, transparent, #0b1524), #132238;
             background-size: cover;
             background-position: center;
             display: flex;
             align-items: flex-end;
             padding: 30px;
-            border-bottom: 5px solid #000;
         }
         .modal-body {
-            padding: 35px;
+            padding: 30px 40px;
         }
         .modal-details {
             display: flex;
@@ -334,46 +294,64 @@
         }
         .modal-desc {
             flex: 2;
-            font-size: 1.2rem;
+            font-size: 1.05rem;
             line-height: 1.6;
-            color: #222;
-            font-weight: 600;
+            color: #cfdaf0;
         }
         .modal-meta {
             flex: 1;
-            font-size: 1.05rem;
-            font-weight: 900;
-            color: #444;
+            font-size: 0.9rem;
+            color: #8fa0b5;
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            text-transform: uppercase;
+            gap: 12px;
+        }
+        .btn-play {
+            width: 100%;
+            margin-top: 30px;
+            padding: 15px;
+            border-radius: 30px;
+            border: none;
+            background: linear-gradient(135deg, #d4af37 0%, #aa8413 100%);
+            color: #050b14;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(212,175,55,0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-play:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(212,175,55,0.6);
         }
 
-        /* Stream-Ansicht-Container */
+        /* Stream-Ansicht */
         .stream-view {
             display: none;
-            padding: 140px 4% 40px 4%;
+            padding: 110px 4% 40px 4%;
             flex-direction: row;
-            gap: 30px;
+            gap: 25px;
             min-height: 80vh;
         }
         .main-player-box {
             flex: 1;
             aspect-ratio: 16/9;
             background: #000;
+            border-radius: 16px;
             position: relative;
             overflow: hidden;
-            border: 6px solid #000;
-            box-shadow: 10px 10px 0px #000;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.05);
         }
         .chat-box {
             width: 380px;
-            background: #fff;
+            background: #0b1524;
+            border-radius: 16px;
             display: none;
             overflow: hidden;
-            border: 6px solid #000;
-            box-shadow: 10px 10px 0px #3a86ff;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
         }
         .twitch-button-blocker {
             display: none;
@@ -383,40 +361,37 @@
             display: none;
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: #eef1f5;
+            background: #0b1524;
             align-items: center;
             justify-content: center;
             text-align: center;
             flex-direction: column;
             padding: 30px;
         }
-        .error-message h2 { font-family: 'Bangers', sans-serif; color: #ff3e3e; font-size: 4.5rem; text-shadow: 3px 3px 0px #000; margin-bottom: 10px; }
+        .error-message h2 { color: #d4af37; font-family: 'Cinzel', serif; font-size: 2rem; margin-bottom: 15px; }
 
         /* Smartphone Optimierungen */
         @media (max-width: 768px) {
             header { padding: 15px 4%; width: 92%; }
-            .logo-text { font-size: 2.5rem; }
-            .nav-links { gap: 10px; }
-            .nav-item { padding: 6px 12px; font-size: 0.9rem; border-width: 3px; }
-            .header-right { top: 12px; gap: 10px; }
-            .header-logo-img { height: 50px; }
-            .header-time { font-size: 1.5rem; padding: 2px 10px; border-width: 3px; }
-            .hero { padding-top: 130px; height: auto; }
-            .hero-title { font-size: 3.5rem; }
-            .hero-desc { font-size: 1.1rem; }
-            .card { min-width: 250px; height: 150px; }
-            .card-title { font-size: 1.4rem; bottom: 15px; left: 15px; }
-            .stream-view { flex-direction: column; padding-top: 130px; }
+            .logo-text { font-size: 1.5rem; }
+            .nav-links { gap: 15px; font-size: 0.8rem; }
+            .hero { min-height: 85vh; padding-top: 100px; background-position: 65% center; }
+            .hero-title { font-size: 2.5rem; }
+            .hero-desc { font-size: 1rem; }
+            .card { min-width: 210px; height: 120px; border-radius: 8px; }
+            .modal-content { border-radius: 16px; }
+            .modal-hero { height: 180px; }
+            .modal-body { padding: 20px; }
+            .modal-details { flex-direction: column; gap: 20px; }
+            .stream-view { flex-direction: column; padding-top: 95px; }
             .chat-box { width: 100%; height: 350px; }
-            .intro-logo { font-size: 4rem; }
-            .modal-content { border-width: 4px; }
-            .modal-close { top: -15px; right: -15px; width: 35px; height: 35px; font-size: 1.1rem; }
+            .intro-logo { font-size: 2.5rem; letter-spacing: 4px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Dynamisches Comic-Intro -->
+    <!-- Dynamisches Premium-Intro -->
     <div class="intro-container">
         <div class="intro-logo">Rock TV</div>
     </div>
@@ -442,40 +417,40 @@
                 <div class="hero-info-row">
                     <span>Mit IT Hilfe-OptiCroid</span>
                     <span>2026</span>
-                    <span class="hero-badge">HD</span>
+                    <span class="hero-badge">PREMIUM HD</span>
                 </div>
                 <h1 class="hero-title">Rock TV Live</h1>
-                <p class="hero-desc">Willkommen im ultimativen Entertainment-Hub. Erlebe packende Gaming-Streams, exklusive TV-Inhalte und interaktive Shows hautnah im modernen Comic-Schnittstellen-Design.</p>
+                <p class="hero-desc">Willkommen im glanzvollen Entertainment-Hub. Erlebe packende Gaming-Streams, exklusive TV-Inhalte und interaktive Shows hautnah in einem kinoreifen, eleganten Ambiente.</p>
             </div>
         </div>
 
-        <!-- Tagesablauf Reihe -->
+        <!-- Programm-Reihe -->
         <div class="category-row">
             <div class="row-title">Programm-Ablauf & Highlights</div>
             <div class="cards-container">
-                <div class="card" style="min-width: 280px; background: #fff; padding: 20px; box-sizing: border-box;">
-                    <div style="color: #ff3e3e; font-family: 'Bangers', sans-serif; font-size: 1.5rem; letter-spacing: 0.5px; margin-bottom: 5px;">Heute - **:** Uhr</div>
-                    <div style="font-size: 1.5rem; font-weight: 900; color: #111; margin-bottom: 8px; text-transform: uppercase;">Kein Sender</div>
-                    <div style="font-size: 1.05rem; color: #555; font-weight: 600;">Kein Programm verfügbar</div>
+                <div class="card" style="min-width: 280px; background: rgba(255,255,255,0.02); padding: 20px; box-sizing: border-box; border-color: rgba(212,175,55,0.15);">
+                    <div style="color: #d4af37; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; uppercase; letter-spacing: 1px;">Heute</div>
+                    <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; font-family: 'Cinzel', serif;">Kein Sender</div>
+                    <div style="font-size: 0.9rem; color: #8fa0b5;">Momentan kein Programm geplant</div>
                 </div>
-                <div class="card" style="min-width: 280px; background: #fff; padding: 20px; box-sizing: border-box;">
-                    <div style="color: #444; font-family: 'Bangers', sans-serif; font-size: 1.5rem; letter-spacing: 0.5px; margin-bottom: 5px;">MORGEN - **:** Uhr</div>
-                    <div style="font-size: 1.5rem; font-weight: 900; color: #111; margin-bottom: 8px; text-transform: uppercase;">Kein Sender</div>
-                    <div style="font-size: 1.05rem; color: #555; font-weight: 600;">Kein Programm verfügbar</div>
+                <div class="card" style="min-width: 280px; background: rgba(255,255,255,0.02); padding: 20px; box-sizing: border-box; border-color: rgba(255,255,255,0.05);">
+                    <div style="color: #8fa0b5; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; uppercase; letter-spacing: 1px;">Morgen</div>
+                    <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; font-family: 'Cinzel', serif;">Kein Sender</div>
+                    <div style="font-size: 0.9rem; color: #8fa0b5;">Momentan kein Programm geplant</div>
                 </div>
             </div>
         </div>
 
         <!-- Auswahlbereiche Kategorien -->
         <div class="category-row">
-            <div class="row-title">Kanäle</div>
+            <div class="row-title">Entdecken</div>
             <div class="cards-container">
                 <div class="card" onclick="openPreview('gaming')">
-                    <div class="card-img-placeholder" style="background-image: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.45)), url('gaming.png');"></div>
-                    <div class="card-title">Gaming</div>
+                    <div class="card-img-placeholder" style="background: linear-gradient(rgba(5,11,20,0.2), rgba(5,11,20,0.85)), url('gaming.png') center/cover;">Gaming</div>
+                    <div class="card-title">Gaming-Livestream</div>
                 </div>
                 <div class="card" onclick="openPreview('tv')">
-                    <div class="card-img-placeholder" style="background-image: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.45)), url('TV.png');"></div>
+                    <div class="card-img-placeholder" style="background: linear-gradient(rgba(5,11,20,0.2), rgba(5,11,20,0.85)), url('TV.png') center/cover;">TV</div>
                     <div class="card-title">TV Programm</div>
                 </div>
             </div>
@@ -487,9 +462,9 @@
         <div class="main-player-box" id="playerContainer">
             <div class="twitch-button-blocker" id="twitchBlocker"></div>
             <div id="streamError" class="error-message">
-                <h2>OFFLINE</h2>
-                <p style="font-size: 1.3rem; color: #333; font-weight: 600;">Dieser Channel schläft gerade oder sendet im Moment nicht.</p>
-                <button class="btn-play" style="margin-top: 20px;" onclick="showPage('home')">Zurück zur Base</button>
+                <h2>Heute kein Programm</h2>
+                <p style="color: #8fa0b5; max-width: 400px; margin-bottom: 20px;">Dieser Sender ist aktuell offline oder für diese Uhrzeit nicht freigegeben.</p>
+                <button class="btn-play" style="max-width: 250px; font-size: 0.95rem; margin-top: 0;" onclick="showPage('home')">Zurück zur Startseite</button>
             </div>
         </div>
         <div class="chat-box" id="mainChat">
@@ -502,31 +477,30 @@
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-close" onclick="closePreview()">✕</div>
             <div class="modal-hero" id="modalHeroBg">
-                <h2 id="modalTitle" style="font-family: 'Bangers', sans-serif; font-size: 3.5rem; margin: 0; color: #fff; text-shadow: 4px 4px 0px #000; text-transform: uppercase;">Sender-Vorschau</h2>
+                <h2 id="modalTitle" style="font-family: 'Cinzel', serif; font-size: 2.2rem; margin: 0; text-shadow: 0 4px 15px rgba(0,0,0,0.8); color: #fff;">Sender-Vorschau</h2>
             </div>
             <div class="modal-body">
                 <div class="hero-info-row">
-                    <span style="color: #00bf63;">Online-Status</span>
-                    <span id="modalTimeBadge" style="color: #fff; background: #ff3e3e; padding: 4px 12px; border: 3px solid #000;">PROG-TIMER</span>
+                    <span style="color: #46d369;">98% Übereinstimmung</span>
+                    <span id="modalTimeBadge" class="hero-badge" style="background: #d4af37; color: #050b14; border: none; font-weight: bold;">LIVE-TIMER</span>
                 </div>
                 <div class="modal-details">
-                    <div class="modal-desc" id="modalDesc">Beschreibung lädt...</div>
+                    <div class="modal-desc" id="modalDesc">Hier steht die Beschreibung des Senders.</div>
                     <div class="modal-meta">
-                        <div><span style="color: #111;">Kategorie:</span> Entertainment</div>
-                        <div><span style="color: #111;">Zugang:</span> Live-Schedule</div>
+                        <div><strong style="color: #fff;">Genre:</strong> Entertainment</div>
+                        <div><strong style="color: #fff;">Verfügbarkeit:</strong> Zeitgesteuert</div>
                     </div>
                 </div>
-                <button class="btn-play" id="modalPlayBtn" style="width: 100%; margin-top: 30px;">▶ Stream Beitreten</button>
+                <button class="btn-play" id="modalPlayBtn">▶ Abspielen</button>
             </div>
         </div>
     </div>
 
     <script>
-        // ================= CONFIGURATION & SETTINGS =================
         const CONFIG = {
             gaming: {
                 title: "Gaming-Livestream",
-                desc: "Erlebe das Gaming Team live in Aktion. Volle Action inklusive interaktivem Live-Chat für echtes Community-Feeling.",
+                desc: "Erlebe das Gaming Team live in Aktion. Volle Power inklusive interaktivem Live-Chat für echtes Community-Feeling.",
                 start: new Date(2026, 6, 11, 19, 0, 0), 
                 end: new Date(2026, 6, 11, 20, 0, 0),
                 src: "https://player.twitch.tv/?channel=die_goblins1&parent=rock-tv.github.io",
@@ -537,7 +511,7 @@
             },
             tv: {
                 title: "Rock TV - Hauptsender",
-                desc: "Das modernisierte TV-Erlebnis direkt im Browser. Exklusive Clips, Shows und Dokumentations-Highlights im Loop.",
+                desc: "Modernes Kinogefühl direkt im Web. Genieße liebevoll kuratierte Filme, Shows und fesselnde Dokumentationen.",
                 start: new Date(2026, 6, 13, 14, 0, 0), 
                 end: new Date(2026, 6, 13, 15, 45, 0),
                 src: "https://gitlab.com/rock-tv-group/Rock-TV/-/blob/4e5b69b881f69a6801a2101f63f15d5fa201fa65/Jurassic_World.mp4", 
@@ -547,10 +521,9 @@
                 bg: "TV.png"
             }
         };
-        // ============================================================
 
         window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => { document.body.classList.add('loaded'); }, 2800);
+            setTimeout(() => { document.body.classList.add('loaded'); }, 3500);
         });
 
         let activeTarget = 'gaming';
@@ -574,11 +547,13 @@
 
             const modalBadge = document.getElementById('modalTimeBadge');
             if (now >= currentConf.start && now < currentConf.end) {
-                modalBadge.textContent = "Jetzt Live";
-                modalBadge.style.background = "#00bf63";
+                modalBadge.textContent = "Programm läuft";
+                modalBadge.style.background = "#d4af37";
+                modalBadge.style.color = "#050b14";
             } else {
-                modalBadge.textContent = "Offline";
-                modalBadge.style.background = "#ff3e3e";
+                modalBadge.textContent = "Demnächst verfügbar";
+                modalBadge.style.background = "rgba(255,255,255,0.1)";
+                modalBadge.style.color = "#fff";
             }
         }
         setInterval(updateClockAndTimers, 1000);
@@ -604,7 +579,7 @@
             
             document.getElementById('modalTitle').textContent = target.title;
             document.getElementById('modalDesc').textContent = target.desc;
-            document.getElementById('modalHeroBg').style.backgroundImage = `linear-gradient(to bottom, transparent, #fff), url('${target.bg}')`;
+            document.getElementById('modalHeroBg').style.backgroundImage = `linear-gradient(to bottom, transparent, #0b1524), url('${target.bg}')`;
             
             const playBtn = document.getElementById('modalPlayBtn');
             playBtn.onclick = () => startStream(key);
