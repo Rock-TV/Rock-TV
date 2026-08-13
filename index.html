@@ -150,6 +150,19 @@
             font-size: 0.9rem;
             letter-spacing: 1px;
         }
+        
+        /* Unauffälliger Link ohne Verfärbung */
+        .hero-info-row a {
+            color: inherit;
+            text-decoration: none;
+        }
+        .hero-info-row a:visited, 
+        .hero-info-row a:hover, 
+        .hero-info-row a:active {
+            color: inherit;
+            text-decoration: none;
+        }
+
         .hero-badge {
             background: rgba(212, 175, 55, 0.2);
             color: #d4af37;
@@ -415,7 +428,7 @@
         <div class="hero">
             <div class="hero-content">
                 <div class="hero-info-row">
-                    <span><a href="https://opticroidweb.github.io/OptiCroid/">Mit IT Hilfe-OptiCroid</a></span>
+                    <span><a href="https://opticroidweb.github.io/OptiCroid/" target="_blank">Mit IT Hilfe-OptiCroid</a></span>
                     <span>2026</span>
                     <span class="hero-badge">4K</span>
                 </div>
@@ -429,14 +442,15 @@
             <div class="row-title">Programm-Ablauf & Highlights</div>
             <div class="cards-container">
                 <div class="card" style="min-width: 280px; background: rgba(255,255,255,0.02); padding: 20px; box-sizing: border-box; border-color: rgba(212,175,55,0.15);">
-                    <div style="color: #d4af37; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; uppercase; letter-spacing: 1px;">Heute</div>
-                    <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; font-family: 'Cinzel', serif;">Kein Sender</div>
-                    <div style="font-size: 0.9rem; color: #8fa0b5;">Momentan kein Programm geplant</div>
+                    <div style="color: #d4af37; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Heute</div>
+                    <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; font-family: 'Cinzel', serif;">Offene Sender</div>
+                    <div style="font-size: 0.9rem; color: #8fa0b5;">Alvin und die Chipmunks 2</div>
+                    <div style="font-size: 0.9rem; color: #8fa0b5;">Kevin alein Zuhaus</div>
                 </div>
                 <div class="card" style="min-width: 280px; background: rgba(255,255,255,0.02); padding: 20px; box-sizing: border-box; border-color: rgba(255,255,255,0.05);">
-                    <div style="color: #8fa0b5; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; uppercase; letter-spacing: 1px;">Morgen</div>
+                    <div style="color: #8fa0b5; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Morgen</div>
                     <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; font-family: 'Cinzel', serif;">Kein Sender</div>
-                    <div style="font-size: 0.9rem; color: #8fa0b5;">Momentan kein Programm geplant</div>
+                    <div style="font-size: 0.9rem; color: #8fa0b5;">Momentan kein Programm planned</div>
                 </div>
             </div>
         </div>
@@ -450,15 +464,44 @@
                     <div class="card-title">Gaming-Livestream</div>
                 </div>
                 <div class="card" onclick="openPreview('Sender1')">
-                    <div class="card-img-placeholder" style="background: linear-gradient(rgba(5,11,20,0.2), rgba(5,11,20,0.85)), url('TV.png') center/cover;">TV</div>
+                    <div class="card-img-placeholder" style="background: linear-gradient(rgba(5,11,20,0.2), rgba(5,11,20,0.85)), url('TV.png') center/cover;">TV 1</div>
                     <div class="card-title">Alvin und die Chipmunks 2</div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="card" onclick="openPreview('Sender2')">
-                    <div class="card-img-placeholder" style="background: linear-gradient(rgba(5,11,20,0.2), rgba(5,11,20,0.85)), url('TV.png') center/cover;">TV</div>
-                    <div class="card-title">TV</div>
+                <div class="card" onclick="openPreview('Sender2')">
+                    <div class="card-img-placeholder" style="background: linear-gradient(rgba(5,11,20,0.2), rgba(5,11,20,0.85)), url('TV.png') center/cover;">TV 2</div>
+                    <div class="card-title">Kevin allein Zuhaus</div>
+                </div>
+                <div class="card" onclick="openPreview('Sender3')">
+                    <div class="card-img-placeholder" style="background: linear-gradient(rgba(5,11,20,0.2), rgba(5,11,20,0.85)), url('TV.png') center/cover;">TV 3</div>
+                    <div class="card-title">Sender 3 - Live</div>
+                </div>
+                <div class="card" onclick="openPreview('Sender4')">
+                    <div class="card-img-placeholder" style="background: linear-gradient(rgba(5,11,20,0.2), rgba(5,11,20,0.85)), url('TV.png') center/cover;">TV 4</div>
+                    <div class="card-title">Sender 4 - Live</div>
+                </div>
+                <div class="card" onclick="openPreview('Sender5')">
+                    <div class="card-img-placeholder" style="background: linear-gradient(rgba(5,11,20,0.2), rgba(5,11,20,0.85)), url('TV.png') center/cover;">TV 5</div>
+                    <div class="card-title">Sender 5 - Live</div>
+                </div>
+                <div class="card" onclick="openPreview('Sender6')">
+                    <div class="card-img-placeholder" style="background: linear-gradient(rgba(5,11,20,0.2), rgba(5,11,20,0.85)), url('TV.png') center/cover;">TV 6</div>
+                    <div class="card-title">Sender 6 - Live</div>
+                </div>
+                <div class="card" onclick="openPreview('Sender7')">
+                    <div class="card-img-placeholder" style="background: linear-gradient(rgba(5,11,20,0.2), rgba(5,11,20,0.85)), url('TV.png') center/cover;">TV 7</div>
+                    <div class="card-title">Sender 7 - Live</div>
+                </div>
+                <div class="card" onclick="openPreview('Sender8')">
+                    <div class="card-img-placeholder" style="background: linear-gradient(rgba(5,11,20,0.2), rgba(5,11,20,0.85)), url('TV.png') center/cover;">TV 8</div>
+                    <div class="card-title">Sender 8 - Live</div>
+                </div>
+                <div class="card" onclick="openPreview('Sender9')">
+                    <div class="card-img-placeholder" style="background: linear-gradient(rgba(5,11,20,0.2), rgba(5,11,20,0.85)), url('TV.png') center/cover;">TV 9</div>
+                    <div class="card-title">Sender 9 - Live</div>
+                </div>
+                <div class="card" onclick="openPreview('Sender10')">
+                    <div class="card-img-placeholder" style="background: linear-gradient(rgba(5,11,20,0.2), rgba(5,11,20,0.85)), url('TV.png') center/cover;">TV 10</div>
+                    <div class="card-title">Sender 10 - Live</div>
                 </div>
             </div>
         </div>
@@ -521,7 +564,7 @@
                 desc: "Heute Alvin und die Chipmunks 2",
                 start: new Date(2026, 6, 13, 14, 0, 0), 
                 end: new Date(2040, 6, 13, 15, 45, 0),
-                src: "https://rr5---sn-h0jelnez.googlevideo.com/videoplayback?expire=1786635488&ei=f5B9arr0OvGm-NgPuuuvkAY&ip=176.0.66.66&id=o-ADaXRCDmwz_TEFHFedOY5izTI9gFu1xF-Ww_2__DLy5E&itag=18&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&rms=au%2Cau&gcr=de&bui=AZFlqhMVLPCehHxaOqzztElx8Ocv1_uiygf6cok2bzhCaQsa0k0ODbYRRLgCAwkzVqR2TyL-XCPefkPP&spc=KBGBcn0wLM3rlLvRct-gG4xTZroQD6GPQKLO08nhFuyXr6U5iQ6E&vprv=1&svpuc=1&mime=video%2Fmp4&rqh=1&gir=yes&clen=299449507&ratebypass=yes&dur=5311.471&lmt=1762354439282040&fexp=51565116%2C52089683&c=ANDROID_VR&txp=3309224&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cgcr%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AE0s2JYwRAIgHwyGFThS4YIqNSWuu_xJV0XeBrU_zrXFBm6LPFkHYGACIGJtNkCEsRuDdwXNSYtg3osJs93HcgAROoHAry03jmpW&pot=MtIE4-5tQhz8Zpbj0BkUvrgdNbmep6SnrRKGSBXfl6II4xYLnfTspOQRwEVJRmFUYnW5GC6biWcaRMzzx8qOxIA3nWYpR8nzNvSIi9E9NfBv3CqgxwyhGbn0yglp99zvmlx71xDPSNLL3KzWPGCMkXiWc_Ilke3aWuTV2qud8PYaNv1lJDoPPDCTizUWDCNKa9BnYJ-51IZYxj1IlB5iLufo3SYNefDevLpdp_HAvVL1qzov_nXbpiHkAhMVZYD9QWQso746cRulMva1jdg1_qFLVAPmR2zWB_XqhoiGZjLsX0xzbDKL1AYEcpXcNHbFP7PtHsIvtcu2zetkNYiNBuAmoPqs9BH5CDlU0Dvlztizryj5YosW-NwyREVSJwGBbA5EXXP3LJYFniA58lKqOLwucG-Vd1EaSfMOMbCPTDlaTdypafhf0YZujFyoEmZhy81oxOhQ2-Nvdy-FS2urHXhf97apdzNDJ-vU53mXwVVGhSA-ZioriBnE8C9m_ZUXTnQ31L51m1SNOEVu6RRHpge9avtTZeQhTUupSqO7El0R33hcPrwSDkZGryEQ0jjKsfmbLXGOth549quZqyY5lUo3NacsQXEar0kPxKrlnML0sqK3ZesD2NsyyXkeokqjsZHsgT5s3zZxNo5FSjbmcHuk7rXt3170Jpr0huJOATRxl743OQjmc7fZFtVD4hMsvU9pptafD5a7yjcleab0wtGX17B5iwnKHdDVmF_oHnqSTDSJaz0fFeCoaFxxdI00Y6o9NWgDTr_S_R41ddwugSkaivoY&title=Alvin+und+die+Chipmunks+2+%28FANTASY+ABENTEUER+ganzer+Film+auf+Deutsch%2C+Kultfilme%2C+Animationsfilm%29&cms_redirect=yes&cps=360&met=1786613918,&mh=Cd&mip=2003:f0:5f1b:186b:85d0:18d1:225:c926&mm=31&mn=sn-h0jelnez&ms=au&mt=1786613380&mv=m&mvi=5&pl=37&lsparams=cps,met,mh,mip,mm,mn,ms,mv,mvi,pl,rms&lsig=APaTxxMwRQIgdBVlzHaVl9GGUiNUHmY_OBNInKfLEe13jIKKja-Kd-oCIQD5uFTXmtUjMN8KBSf9FECCp7JcqDBIG4CFfKjEtOAfrQ%3D%3D", 
+                src: "https://rr5---sn-h0jelnez.googlevideo.com/videoplayback?expire=1786635488&ei=f5B9arr0OvGm-NgPuuuvkAY&ip=176.0.66.66&id=o-ADaXRCDmwz_TEFHFedOY5izTI9gFu1xF-Ww_2__DLy5E&itag=18&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&rms=au%2Cau&gcr=de&bui=AZFlqhMVLPCehHxaOqzztElx8Ocv1_uiygf6cok2bzhCaQsa0k0ODbYRRLgCAwkzVqR2TyL-XCPefkPP&spc=KBGBcn0wLM3rlLvRct-gG4xTZroQD6GPQKLO08nhFuyXr6U5iQ6E&vprv=1&svpuc=1&mime=video%2Fmp4&rqh=1&gir=yes&clen=299449507&ratebypass=yes&dur=5311.471&lmt=1762354439282040&fexp=51565116%2C52089683&c=ANDROID_VR&txp=3309224&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AE0s2JYwRAIgHwyGFThS4YIqNSWuu_xJV0XeBrU_zrXFBm6LPFkHYGACIGJtNkCEsRuDdwXNSYtg3osJs93HcgAROoHAry03jmpW&pot=MtIE4-5tQhz8Zpbj0BkUvrgdNbmep6SnrRKGSBXfl6II4xYLnfTspOQRwEVJRmFUYnW5GC6biWcaRMzzx8qOxIA3nWYpR8nzNvSIi9E9NfBv3CqgxwyhGbn0yglp99zvmlx71xDPSNLL3KzWPGCMkXiWc_Ilke3aWuTV2qud8PYaNv1lJDoPPDCTizUWDCNKa9BnYJ-51IZYxj1IlB5iLufo3SYNefDevLpdp_HAvVL1qzov_nXbpiHkAhMVZYD9QWQso746cRulMva1jdg1_qFLVAPmR2zWB_XqhoiGZjLsX0xzbDKL1AYEcpXcNHbFP7PtHsIvtcu2zetkNYiNBuAmoPqs9BH5CDlU0Dvlztizryj5YosW-NwyREVSJwGBbA5EXXP3LJYFniA58lKqOLwucG-Vd1EaSfMOMbCPTDlaTdypafhf0YZujFyoEmZhy81oxOhQ2-Nvdy-FS2urHXhf97apdzNDJ-vU53mXwVVGhSA-ZioriBnE8C9m_ZUXTnQ31L51m1SNOEVu6RRHpge9avtTZeQhTUupSqO7El0R33hcPrwSDkZGryEQ0jjKsfmbLXGOth549quZqyY5lUo3NacsQXEar0kPxKrlnML0sqK3ZesD2NsyyXkeokqjsZHsgT5s3zZxNo5FSjbmcHuk7rXt3170Jpr0huJOATRxl743OQjmc7fZFtVD4hMsvU9pptafD5a7yjcleab0wtGX17B5iwnKHdDVmF_oHnqSTDSJaz0fFeCoaFxxdI00Y6o9NWgDTr_S_R41ddwugSkaivoY&title=Alvin+und+die+Chipmunks+2+%28FANTASY+ABENTEUER+ganzer+Film+auf+Deutsch%2C+Kultfilme%2C+Animationsfilm%29&cms_redirect=yes&cps=360&met=1786613918,&mh=Cd&mip=2003:f0:5f1b:186b:85d0:18d1:225:c926&mm=31&mn=sn-h0jelnez&ms=au&mt=1786613380&mv=m&mvi=5&pl=37&lsparams=cps,met,mh,mip,mm,mn,ms,mv,mvi,pl,rms&lsig=APaTxxMwRQIgdBVlzHaVl9GGUiNUHmY_OBNInKfLEe13jIKKja-Kd-oCIQD5uFTXmtUjMN8KBSf9FECCp7JcqDBIG4CFfKjEtOAfrQ%3D%3D", 
                 hasChat: false,
                 isTwitch: false,
                 isVideoFile: true,
@@ -529,7 +572,7 @@
             },
             Sender2: {
                 title: "Rock TV - Sender2",
-                desc: "Kevin alein Zuhaus",
+                desc: "Kevin allein Zuhaus",
                 start: new Date(2026, 6, 13, 14, 0, 0), 
                 end: new Date(2040, 6, 13, 15, 45, 0),
                 src: "https://r3---sn-h0jelnez.googlevideo.com/videoplayback?expire=1786636614&ei=5pR9aratJtCjp-oPxZDFuAU&ip=176.1.246.74&id=o-AKMXVMJhw4xc4X6CCOEYSxn-a-K9aeHntW7RdznBy8qK&itag=18&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&rms=au%2Cau&bui=AZFlqhMtp2Us41qJU0FQVMoUBBCaZPSYXWN5MwTz1-GDfpq3kn0vDhj39p9xh7_GNMdkwupNyh65F7-L&spc=KBGBck7Cl_mlg4PUwt05OvyM0V9Hfsf2yvbHk2hSD5JdhnD-xy3S&vprv=1&svpuc=1&mime=video%2Fmp4&rqh=1&gir=yes&clen=310115927&ratebypass=yes&dur=5950.879&lmt=1766658732333549&fexp=51565115%2C52089683&c=ANDROID_VR&txp=5538534&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AE0s2JYwRAIgWP-j2l3TjELirzAiyg6vcnCcO3SBfDANE8FOctvtfoECIDBXcsUYHjgKJFXQmBPPqRbHfRIxaGdugj8m-A3UG73Z&pot=Ms4EsJv12gIN5Tmwpc50QzA4qxzz1aDPjh1nrLJC2Id_gZXG10tF2x-QzU-XBWrO_ixof2jLNpm8sgMmoB3dpjG94M2eAhVZWITYR3WjJFuVtDq15MCk_p4C2NLxKIRiUIM6L6FkpQfNucEVDSFjZflVVsS4bj9Ilk7nvuSMJlwSzOKeuRJTrT9WgWMo8YHHhOQ2C5JbRj96o0uID4BrjQksMjA7my17XSglW0Fzdi9k17VOBOKVhWmyjECQQ3n5HNSfAAW80jQ_8kMtRtP6EXVCZhGMGWyasaLz-bDZDv_cGXmFyrI7M8QNHTz3C99sLZ1m5Fpxh5PZ28dfdoZYsL_ihkHjAm2OluX09nCetdVMmPhGJkqTBwu0XDuXwLQHih52phXg7cA6imDai0b36Idy-hZpKPO-qcfLKZYVIoLMH1hTWqP7Et4cCRyfFUs34HyEiqIkj1rFTdZwekPQID_uvEBXzXooXKztaAmHqatK0ZOfgpw7uppZG4-HstJcBRV-hGeJCrvxIUalIHZntxlS8Wcs-WvaX5aTd17BEqFO9R6M-mfXgzwDUYUs55gp8XvEbSutglSEnBx35Dy4BQV9OX8mc9WKUyb_5TDBrLcj6YOUKMFp3EygEvfWyi11ADIbPVmjMySOownCbamGFw4FDPZu75dh333FmxHbZGolNqI1LELoHEGZT4lU7wratl-KVN7B3d6B1_Ha4O4dYtZWq2uYJsp_WNT0850acdAeGswJSXct2_WROdbbEfgVbqKo4Km0hx6JpGoY2GrUvU0=&title=HOME+ALONE+1+%F0%9F%94%A5Neuer+kompletter+Film+auf+Deutsch%F0%9F%94%A5+Kein+Zoom+bei+gutem+Klang&cms_redirect=yes&cps=333&met=1786615044,&mh=3c&mip=2003:f0:5f1b:186b:85d0:18d1:225:c926&mm=31&mn=sn-h0jelnez&ms=au&mt=1786614584&mv=m&mvi=3&pl=37&lsparams=cps,met,mh,mip,mm,mn,ms,mv,mvi,pl,rms&lsig=APaTxxMwRQIhAPVxr2iRgPo3WixWOukNXXet1DIoCl2T0q-VVryEYVasAiARqFusBCG-BL_RIX_sXxJfsZu_NVcKGDxhPR7UIhYs7g%3D%3D", 
@@ -537,7 +580,15 @@
                 isTwitch: false,
                 isVideoFile: true,
                 bg: "TV.png"
-            }
+            },
+            Sender3: { title: "Rock TV - Sender 3", desc: "Unterhaltungsprogramm", start: new Date(2026, 0, 1), end: new Date(2040, 0, 1), src: "", hasChat: false, isTwitch: false, isVideoFile: false, bg: "TV.png" },
+            Sender4: { title: "Rock TV - Sender 4", desc: "Unterhaltungsprogramm", start: new Date(2026, 0, 1), end: new Date(2040, 0, 1), src: "", hasChat: false, isTwitch: false, isVideoFile: false, bg: "TV.png" },
+            Sender5: { title: "Rock TV - Sender 5", desc: "Unterhaltungsprogramm", start: new Date(2026, 0, 1), end: new Date(2040, 0, 1), src: "", hasChat: false, isTwitch: false, isVideoFile: false, bg: "TV.png" },
+            Sender6: { title: "Rock TV - Sender 6", desc: "Unterhaltungsprogramm", start: new Date(2026, 0, 1), end: new Date(2040, 0, 1), src: "", hasChat: false, isTwitch: false, isVideoFile: false, bg: "TV.png" },
+            Sender7: { title: "Rock TV - Sender 7", desc: "Unterhaltungsprogramm", start: new Date(2026, 0, 1), end: new Date(2040, 0, 1), src: "", hasChat: false, isTwitch: false, isVideoFile: false, bg: "TV.png" },
+            Sender8: { title: "Rock TV - Sender 8", desc: "Unterhaltungsprogramm", start: new Date(2026, 0, 1), end: new Date(2040, 0, 1), src: "", hasChat: false, isTwitch: false, isVideoFile: false, bg: "TV.png" },
+            Sender9: { title: "Rock TV - Sender 9", desc: "Unterhaltungsprogramm", start: new Date(2026, 0, 1), end: new Date(2040, 0, 1), src: "", hasChat: false, isTwitch: false, isVideoFile: false, bg: "TV.png" },
+            Sender10: { title: "Rock TV - Sender 10", desc: "Unterhaltungsprogramm", start: new Date(2026, 0, 1), end: new Date(2040, 0, 1), src: "", hasChat: false, isTwitch: false, isVideoFile: false, bg: "TV.png" }
         };
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -553,7 +604,7 @@
             let displayTime = `${hours}:${minutes}`;
 
             const currentConf = CONFIG[activeTarget];
-            if (now < currentConf.start) {
+            if (currentConf && now < currentConf.start) {
                 const diff = currentConf.start - now;
                 const tHours = Math.floor(diff / (1000 * 60 * 60)).toString().padStart(2, '0');
                 const tMinutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
@@ -564,7 +615,7 @@
             document.getElementById('clockDisplay').textContent = displayTime;
 
             const modalBadge = document.getElementById('modalTimeBadge');
-            if (now >= currentConf.start && now < currentConf.end) {
+            if (currentConf && now >= currentConf.start && now < currentConf.end) {
                 modalBadge.textContent = "Programm läuft";
                 modalBadge.style.background = "#d4af37";
                 modalBadge.style.color = "#050b14";
@@ -594,6 +645,7 @@
         function openPreview(key) {
             activeTarget = key;
             const target = CONFIG[key];
+            if (!target) return;
             
             document.getElementById('modalTitle').textContent = target.title;
             document.getElementById('modalDesc').textContent = target.desc;
@@ -632,7 +684,7 @@
             removeExistingPlayers();
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
 
-            if (now >= target.start && now < target.end) {
+            if (target && target.src && now >= target.start && now < target.end) {
                 errorBox.style.display = 'none';
                 
                 if (target.isVideoFile) {
